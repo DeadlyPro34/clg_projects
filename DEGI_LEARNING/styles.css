@@ -1,0 +1,1044 @@
+/* --- 1. GLOBAL VARIABLES & RESET --- */
+:root {
+    --primary-color: #007bff;
+    --text-color: #333;
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --light-gray: #f8f9fa;
+    --dark-blue: #0056b3;
+    --success-color: #28a745;
+    --icon-color: #007bff;
+    --background-soft-blue: #f7f9fc;
+    --footer-bg: #222;
+    --footer-text: #aaa;
+    /* Added for Feature Section */
+    --primary-blue: #3b82f6;
+    --text-dark: #111827;
+    --text-gray: #6b7280;
+    --bg-gray: #F9FAFB;
+    --border-light: #f3f4f6;
+    --border-gray: #d1d5db;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-family);
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: white;
+    padding-top: 85px;
+    /* Offset for fixed navbar */
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* --- 2. ANIMATION KEYFRAMES --- */
+@keyframes float {
+    0% {
+        transform: translate(0, 0px) rotate(2deg);
+    }
+
+    50% {
+        transform: translate(0, -15px) rotate(2deg);
+    }
+
+    100% {
+        transform: translate(0, 0px) rotate(2deg);
+    }
+}
+
+@keyframes float-secondary {
+    0% {
+        transform: translate(0, 0px) rotate(-3deg);
+    }
+
+    50% {
+        transform: translate(0, -10px) rotate(-3deg);
+    }
+
+    100% {
+        transform: translate(0, 0px) rotate(-3deg);
+    }
+}
+
+/* --- 3. NAVBAR STYLES --- */
+.navbar {
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+    background: white;
+    transition: box-shadow 0.3s ease;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 700;
+    color: #222;
+    flex-shrink: 0;
+}
+
+.nav-links {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    padding: 0 40px;
+}
+
+.nav-links ul {
+    list-style: none;
+    display: flex;
+}
+
+.nav-links ul li {
+    position: relative;
+    z-index: 10;
+}
+
+.nav-links ul li a {
+    text-decoration: none;
+    color: var(--text-color);
+    padding: 10px 15px;
+    display: block;
+    font-size: 15px;
+    transition: color 0.3s ease;
+}
+
+.nav-links ul li a:hover {
+    color: var(--primary-color);
+}
+
+.nav-icons {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.search-box {
+    display: flex;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-right: 15px;
+}
+
+.search-box input {
+    border: none;
+    padding: 8px 10px 8px 15px;
+    outline: none;
+    width: 150px;
+}
+
+.search-box button {
+    background: white;
+    border: none;
+    padding: 8px 10px;
+    cursor: pointer;
+    color: #666;
+}
+
+.user-icon,
+.cart-icon {
+    transition: color 0.3s ease;
+}
+
+.user-icon:hover,
+.cart-icon:hover {
+    color: var(--primary-color);
+}
+
+.cart-icon {
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    margin-left: 10px;
+    margin-right: 5px;
+}
+
+/* --- 4. HERO SECTION STYLES --- */
+.hero-section {
+    padding: 100px 0;
+    background: radial-gradient(circle at 50% 50%, rgba(245, 250, 255, 0.8) 0%, white 70%);
+    min-height: 80vh;
+}
+
+.hero-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.text-content {
+    flex: 1;
+    max-width: 45%;
+}
+
+.author-tag {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.text-content h1 {
+    font-size: 68px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 30px;
+    color: #222;
+}
+
+.btn-buy-book {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 14px 40px;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 40px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-buy-book:hover {
+    background-color: var(--dark-blue);
+    transform: scale(1.05);
+}
+
+.retailers {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.retailer-logo {
+    width: 80px;
+    height: 20px;
+    opacity: 0.8;
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: block;
+    filter: grayscale(100%);
+    transition: transform 0.3s ease, filter 0.3s;
+}
+
+.retailer-logo:hover {
+    transform: translateY(-3px);
+    opacity: 1;
+    filter: grayscale(0%);
+}
+
+.book-image-container {
+    position: relative;
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    min-height: 550px;
+    padding-right: 50px;
+}
+
+.book-cover {
+    box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    position: absolute;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.main-book {
+    height: 550px;
+    width: 350px;
+    z-index: 10;
+    transform: rotate(2deg);
+    right: 150px;
+    top: 50px;
+    animation: float 4s ease-in-out infinite;
+}
+
+.main-book:hover {
+    transform: rotate(0deg) scale(1.05);
+    box-shadow: 15px 15px 50px rgba(0, 0, 0, 0.4);
+    animation-play-state: paused;
+}
+
+.secondary-book {
+    height: 500px;
+    width: 320px;
+    z-index: 5;
+    transform: rotate(-3deg);
+    right: 0;
+    top: 80px;
+    opacity: 0.9;
+    animation: float-secondary 5s ease-in-out infinite;
+}
+
+.secondary-book:hover {
+    transform: rotate(0deg) scale(1.05);
+    opacity: 1;
+    animation-play-state: paused;
+}
+
+/* --- 5. FEATURED COURSES SECTION --- */
+.collection-section {
+    padding: 80px 0;
+    background-color: white;
+    text-align: center;
+}
+
+.collection-section h2 {
+    font-size: 40px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 10px;
+}
+
+.collection-section .description {
+    font-size: 16px;
+    color: #777;
+    max-width: 650px;
+    margin: 0 auto 40px;
+}
+
+.category-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 50px;
+    flex-wrap: wrap;
+}
+
+.category-tabs button {
+    background-color: transparent;
+    border: 1px solid #ddd;
+    color: var(--text-color);
+    padding: 10px 25px;
+    border-radius: 50px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.category-tabs button:hover,
+.category-tabs button.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.book-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+}
+
+.book-card {
+    text-align: left;
+    padding: 10px;
+    transition: transform 0.3s ease, opacity 0.5s ease;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.book-card.hidden {
+    display: none;
+    opacity: 0;
+}
+
+.book-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 123, 255, 0.1);
+}
+
+.book-card .cover-image {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+}
+
+.book-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 5px;
+    text-transform: capitalize;
+}
+
+.book-card .rating {
+    color: #FFD700;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.book-card .price {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--primary-color);
+    display: block;
+}
+
+.book-card .price .old-price {
+    font-size: 14px;
+    color: #999;
+    text-decoration: line-through;
+    font-weight: 400;
+    margin-left: 5px;
+}
+
+/* --- 6. PLATFORM FEATURES (ABOUT) SECTION --- */
+/* 1. Main Section Wrapper */
+.book-features-section {
+    width: 100%;
+    padding: 3rem 0;
+    background-color: var(--bg-gray);
+}
+
+/* 2. Container (Features specific) - using generic container but ensuring compatibility */
+
+/* 3. Lead (Intro) */
+.lead {
+    text-align: center;
+    margin-bottom: 3rem;
+    max-width: 48rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.lead h2 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 0.75rem;
+}
+
+.lead p {
+    color: var(--text-gray);
+    font-size: 1.125rem;
+    line-height: 1.625;
+}
+
+/* 4. Grid */
+.features-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+/* 5. Feature Item (Card) */
+.feature-item {
+    background-color: white;
+    border-radius: 1rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border: 1px solid var(--border-light);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    height: 100%;
+    position: relative;
+    /* Needed for absolute positioning of arrow-link */
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+.feature-item h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+}
+
+.feature-item p {
+    color: var(--text-gray);
+    line-height: 1.625;
+    font-size: 0.875rem;
+    margin-bottom: 4rem;
+    /* Spacing for the arrow button */
+}
+
+/* 6. Icon Box */
+.icon-box {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+}
+
+.icon-box svg {
+    width: 3rem;
+    height: 3rem;
+    color: var(--primary-blue);
+}
+
+/* 7. Arrow Link */
+.arrow-link {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 9999px;
+    border: 1px solid var(--border-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9ca3af;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.arrow-link svg {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.feature-item:hover .arrow-link {
+    background-color: var(--primary-blue);
+    color: white;
+    border-color: var(--primary-blue);
+}
+
+/* Responsive Breakpoints */
+@media (min-width: 768px) {
+    .lead h2 {
+        font-size: 2.25rem;
+    }
+
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .features-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* --- 7. EDUCATOR/INSTRUCTOR SECTION --- */
+.author-section {
+    background-color: white;
+    padding: 100px 0;
+    overflow: hidden;
+}
+
+.author-content {
+    display: flex;
+    gap: 60px;
+    align-items: center;
+}
+
+.author-image-column {
+    flex: 1;
+    position: relative;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+    max-width: 50%;
+}
+
+.author-image-column img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    display: block;
+}
+
+.bestseller-badge {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: var(--success-color);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    z-index: 5;
+}
+
+.reviews-card {
+    position: absolute;
+    bottom: -30px;
+    right: -30px;
+    background-color: white;
+    padding: 15px 25px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 15;
+}
+
+.reviews-card .rating-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.reviews-card .avatars {
+    display: flex;
+    position: relative;
+    margin-right: 10px;
+}
+
+.reviews-card .avatar-img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid white;
+    margin-left: -10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    object-fit: cover;
+}
+
+.reviews-card .avatar-img:first-child {
+    margin-left: 0;
+}
+
+.reviews-card .stars {
+    color: #FFD700;
+    font-size: 16px;
+}
+
+.reviews-card .stars .fas {
+    margin-right: -2px;
+}
+
+.author-text-column {
+    flex: 1;
+    max-width: 50%;
+}
+
+.author-text-column .meet-author-tag {
+    font-size: 16px;
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.author-text-column h2 {
+    font-size: 48px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.author-text-column p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.author-stats {
+    display: flex;
+    gap: 60px;
+    margin-bottom: 40px;
+}
+
+.stat-item h3 {
+    font-size: 40px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 5px;
+}
+
+.stat-item p {
+    font-size: 16px;
+    color: #777;
+    margin: 0;
+}
+
+.author-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.btn-contact-author {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 14px 30px;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-contact-author:hover {
+    background-color: var(--dark-blue);
+    transform: translateY(-2px);
+}
+
+.btn-shop-now {
+    background-color: white;
+    color: var(--text-color);
+    border: 1px solid #ddd;
+    padding: 14px 30px;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 16px;
+    transition: background-color 0.3s, color 0.3s, transform 0.2s, border-color 0.3s;
+}
+
+.btn-shop-now:hover {
+    background-color: #f0f0f0;
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+/* --- 8. FOOTER STYLES --- */
+.site-footer {
+    background-color: var(--footer-bg);
+    color: var(--footer-text);
+    padding: 80px 0 0 0;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    padding-bottom: 40px;
+}
+
+.footer-col .logo {
+    color: white;
+    margin-bottom: 20px;
+}
+
+.footer-col p {
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 30px;
+    max-width: 300px;
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+}
+
+.social-links a {
+    color: var(--footer-text);
+    font-size: 20px;
+    text-decoration: none;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.social-links a:hover {
+    color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+.footer-col h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.footer-col ul {
+    list-style: none;
+}
+
+.footer-col ul li {
+    margin-bottom: 10px;
+}
+
+.footer-col ul li a {
+    text-decoration: none;
+    color: var(--footer-text);
+    transition: color 0.3s, padding-left 0.3s;
+}
+
+.footer-col ul li a:hover {
+    color: white;
+    padding-left: 5px;
+}
+
+.footer-bottom {
+    border-top: 1px solid #444;
+    padding: 20px 0;
+    text-align: center;
+    font-size: 14px;
+    color: #888;
+}
+
+/* --- 9. MOBILE RESPONSIVENESS (Media Queries) --- */
+@media (max-width: 992px) {
+    .hero-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .text-content {
+        max-width: 100%;
+    }
+
+    .text-content h1 {
+        font-size: 48px;
+    }
+
+    .book-image-container {
+        min-height: 400px;
+        padding-right: 0;
+        margin-bottom: 50px;
+        justify-content: center;
+    }
+
+    .main-book,
+    .secondary-book {
+        position: static;
+        transform: none !important;
+        animation: none !important;
+        margin: 0 10px;
+    }
+
+    .main-book {
+        height: 400px;
+        width: 250px;
+    }
+
+    .secondary-book {
+        display: none;
+    }
+
+    .author-content {
+        flex-direction: column;
+    }
+
+    .author-image-column,
+    .author-text-column {
+        max-width: 100%;
+    }
+
+    .author-image-column {
+        margin-bottom: 50px;
+    }
+
+    .author-text-column h2 {
+        font-size: 36px;
+    }
+
+    .reviews-card {
+        bottom: 0;
+        right: 50%;
+        transform: translateX(50%);
+        padding: 10px 20px;
+    }
+
+    .book-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .features-grid {
+        flex-wrap: wrap;
+    }
+
+    .stat-item {
+        text-align: center;
+    }
+
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    body {
+        padding-top: 85px;
+    }
+}
+
+@media (max-width: 600px) {
+    .book-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .author-stats {
+        gap: 30px;
+        justify-content: center;
+    }
+
+    .author-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-col {
+        text-align: center;
+    }
+
+    .footer-col p {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .social-links {
+        justify-content: center;
+    }
+}
+
+/* --- 10. MODAL (POP-UP) STYLES --- */
+.hidden {
+    display: none !important;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay:not(.hidden) {
+    opacity: 1;
+}
+
+.modal-content {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+    transform: translateY(-30px);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay:not(.hidden) .modal-content {
+    transform: translateY(0);
+}
+
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 30px;
+    color: #aaa;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.modal-close:hover {
+    color: #333;
+}
+
+.modal-tabs {
+    display: flex;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #eee;
+}
+
+.tab-button {
+    flex-grow: 1;
+    padding: 0.75rem 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #666;
+    transition: color 0.2s, border-bottom 0.3s;
+}
+
+.tab-button.active {
+    color: var(--primary-color);
+    border-bottom: 3px solid var(--primary-color);
+    margin-bottom: -2px;
+}
+
+.auth-form h3 {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+.auth-form input {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+.auth-form input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+}
+
+.btn-primary-modal {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 14px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 16px;
+    width: 100%;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-primary-modal:hover {
+    background-color: var(--dark-blue);
+}

@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- =========================================
+         META TAGS & TITLE
+    ========================================== -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bokify - Digital Learning Platform</title>
+
+    <!-- =========================================
+         EXTERNAL RESOURCES (Fonts & Icons)
+    ========================================== -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+</head>
+
+<body>
+    <!-- =========================================
+         HEADER & NAVIGATION BAR
+    ========================================== -->
+    <header class="navbar">
+        <div class="container">
+            <!-- Logo -->
+            <div class="logo">Bokify</div>
+
+            <!-- Nav Links -->
+            <nav class="nav-links">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#courses">All Courses</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#educators">Educators</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+
+            <!-- Nav Icons (Search, User, Cart) -->
+            <div class="nav-icons">
+                <div class="search-box">
+                    <input type="text" placeholder="Search">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                <a href="#" class="user-icon"><i class="fas fa-user"></i></a>
+                <a href="#" class="cart-icon"><i class="fas fa-shopping-cart"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- =========================================
+             HERO SECTION (Banner)
+        ========================================== -->
+        <section id="home" class="hero-section">
+            <div class="container hero-content">
+                <!-- Text Content -->
+                <div class="text-content">
+                    <p class="author-tag">By top educators</p>
+                    <h1>Find the perfect online course for your child</h1>
+                    <a href="Explore_page/explore_page.html" class="btn-buy-book">Explore Courses</a>
+                    <div class="retailers">
+                        <span class="retailer-logo"
+                            style="background-image: url('https://via.placeholder.com/80x20/F0F0F0/000000?text=Trusted+By+Parents')"></span>
+                        <span class="retailer-logo"
+                            style="background-image: url('https://via.placeholder.com/80x20/F0F0F0/000000?text=Safe+%26+Secure')"></span>
+                        <span class="retailer-logo"
+                            style="background-image: url('https://via.placeholder.com/80x20/F0F0F0/000000?text=24%2F7+Support')"></span>
+                    </div>
+                </div>
+
+                <!-- Hero Images -->
+                <div class="book-image-container">
+                    <img src="BOOK2.png" alt="Online Course Ebook" class="book-cover main-book" />
+                    <img src="BOOK1.jpg" alt="Study Guide" class="book-cover secondary-book" />
+                </div>
+            </div>
+        </section>
+
+
+        <!-- =========================================
+             FEATURED COURSES GRID
+        ========================================== -->
+        <section id="courses" class="collection-section">
+            <div class="container">
+                <h2>Featured Courses</h2>
+                <p class="description">
+                    Discover our most popular courses taught by industry experts to help your child excel in the digital
+                    world.
+                </p>
+
+                <!-- Filter Tabs -->
+                <div class="category-tabs">
+                    <button class="active" onclick="selectCategory(this)" data-category="all">All Subjects</button>
+                    <button onclick="selectCategory(this)" data-category="coding">Coding</button>
+                    <button onclick="selectCategory(this)" data-category="mathematics">Mathematics</button>
+                    <button onclick="selectCategory(this)" data-category="science">Science</button>
+                    <button onclick="selectCategory(this)" data-category="arts">Creative Arts</button>
+                    <button onclick="selectCategory(this)" data-category="language">Language</button>
+                    <button onclick="selectCategory(this)" data-category="robotics">Robotics</button>
+                    <button onclick="selectCategory(this)" data-category="exam-prep">Exam Prep</button>
+                    <button onclick="selectCategory(this)" data-category="critical-thinking">Critical Thinking</button>
+                </div>
+
+                <!-- Course Cards Grid -->
+                <div class="book-grid">
+
+                    <div class="book-card" data-category="coding">
+                        <img src="fundamental-kids-coding.jpg" alt="Coding Course Thumbnail" class="cover-image" />
+                        <div>
+                            <div class="rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                    class="fas fa-star"></i><i class="far fa-star"></i>
+                            </div>
+                            <h3>Coding Fundamentals for Kids</h3>
+                            <span class="price">₹ 3,999 <span class="old-price">₹ 6,499</span></span>
+                        </div>
+                    </div>
+
+                    <div class="book-card" data-category="mathematics">
+                        <img src="math-class.jpg" alt="Math Course Thumbnail" class="cover-image" />
+                        <div>
+                            <div class="rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                    class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                            <h3>Advanced Math Skills (Grade 7+)</h3>
+                            <span class="price">₹ 4,799 <span class="old-price">₹ 5,499</span></span>
+                        </div>
+                    </div>
+
+                    <div class="book-card" data-category="robotics">
+                        <img src="robotic-class.jpg" alt="Robotics Course Thumbnail" class="cover-image" />
+                        <div>
+                            <div class="rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                    class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                            <h3>Introduction to Robotics</h3>
+                            <span class="price">₹ 5,299</span>
+                        </div>
+                    </div>
+
+                    <div class="book-card" data-category="arts">
+                        <img src="art-class.jpg" alt="Art Course Thumbnail" class="cover-image" />
+                        <div>
+                            <div class="rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                    class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                            <h3>Digital Art Masterclass</h3>
+                            <span class="price">₹ 3,599</span>
+                        </div>
+                    </div>
+
+                    <div class="book-card" data-category="science">
+                        <img src="sci-class.jpg" alt="Science Course Thumbnail" class="cover-image" />
+                        <div>
+                            <div class="rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                    class="fas fa-star"></i><i class="far fa-star"></i>
+                            </div>
+                            <h3>Science: Space Exploration</h3>
+                            <span class="price">₹ 3,199 <span class="old-price">₹ 4,199</span></span>
+                        </div>
+                    </div>
+
+                    <div class="book-card" data-category="language">
+                        <img src="lang-course.jpg" alt="Language Course Thumbnail" class="cover-image" />
+                        <div>
+                            <div class="rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                    class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                            <h3>Creative Writing Workshop</h3>
+                            <span class="price">₹ 2,999</span>
+                        </div>
+                    </div>
+
+                    <div class="book-card" data-category="critical-thinking">
+                        <img src="finance.jpg" alt="Math Course Thumbnail" class="cover-image" />
+                        <div>
+                            <div class="rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                    class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                            <h3>Financial Literacy for Teens</h3>
+                            <span class="price">₹ 4,999</span>
+                        </div>
+                    </div>
+
+                    <div class="book-card" data-category="coding">
+                        <img src="online-coding.jpg" alt="Coding Course Thumbnail" class="cover-image" />
+                        <div>
+                            <div class="rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                    class="fas fa-star"></i><i class="far fa-star"></i>
+                            </div>
+                            <h3>Web Development Basics</h3>
+                            <span class="price">₹ 5,999 <span class="old-price">₹ 7,999</span></span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================
+             PLATFORM FEATURES (ABOUT) SECTION
+        ========================================== -->
+        <section id="about" class="book-features-section">
+            <div class="container">
+                <!-- Intro Text -->
+                <div class="lead">
+                    <h2>Platform Top Features</h2>
+                    <p>
+                        Your trusted source for the finest digital education. We consistently provide tools that
+                        embody excellence and gain your child's confidence.
+                    </p>
+                </div>
+
+                <!-- Cards Grid -->
+                <div class="features-grid">
+
+                    <!-- Card 1: Interactive Lessons -->
+                    <div class="feature-item">
+                        <div class="icon-box">
+                            <i data-lucide="monitor"></i>
+                        </div>
+                        <h3>Interactive Lessons</h3>
+                        <p>
+                            High-quality, curriculum-aligned videos and interactive exercises designed for deep
+                            understanding and engagement.
+                        </p>
+                        <div class="arrow-link">
+                            <i data-lucide="arrow-right"></i>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Certified Educators -->
+                    <div class="feature-item">
+                        <div class="icon-box">
+                            <i data-lucide="user"></i>
+                        </div>
+                        <h3>Certified Educators</h3>
+                        <p>
+                            Learn from certified, experienced, and passionate educators who make learning fun and
+                            effective.
+                        </p>
+                        <div class="arrow-link">
+                            <i data-lucide="arrow-right"></i>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Progress Tracking -->
+                    <div class="feature-item">
+                        <div class="icon-box">
+                            <i data-lucide="trending-up"></i>
+                        </div>
+                        <h3>Progress Tracking</h3>
+                        <p>
+                            Real-time progress reports and performance analytics for parents to monitor their child's
+                            growth easily.
+                        </p>
+                        <div class="arrow-link">
+                            <i data-lucide="arrow-right"></i>
+                        </div>
+                    </div>
+
+                    <!-- Card 4: Gamified Learning -->
+                    <div class="feature-item">
+                        <div class="icon-box">
+                            <i data-lucide="puzzle"></i>
+                        </div>
+                        <h3>Gamified Learning</h3>
+                        <p>
+                            Engaging challenges, rewards, and leaderboards to keep students motivated and excited about
+                            education.
+                        </p>
+                        <div class="arrow-link">
+                            <i data-lucide="arrow-right"></i>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================
+             EDUCATORS & TESTIMONIALS SECTION
+        ========================================== -->
+        <section id="educators" class="author-section">
+            <div class="container author-content">
+                <div class="author-image-column">
+                    <img src="tutor.png" alt="Expert Educator" />
+                    <span class="bestseller-badge">Top Rated Educator</span>
+                    <div class="reviews-card">
+                        <div class="rating-row">
+                            <div class="avatars">
+                                <img src="std1.jpg" alt="Student 1" class="avatar-img" />
+                                <img src="std2.jpg" alt="Student 2" class="avatar-img" />
+                                <img src="std3.jpg" alt="Student 3" class="avatar-img" />
+                            </div>
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                        <span>Average Rating 4.9</span>
+                    </div>
+                </div>
+
+                <div class="author-text-column">
+                    <p class="meet-author-tag">Meet Our Educators</p>
+                    <h2>Learn from the best, from the comfort of your home</h2>
+                    <p>Hamare educators experienced aur passionate hain, jo bacchon ko ghar baithe interactive aur
+                        engaging tareeke se padhate hain. Har bachhe ki zaroorat ko samajhte hue, hum personalized
+                        learning paths provide karte hain taaki aapka bachha har subject mein strong ban sake.</p>
+
+                    <div class="author-stats">
+                        <div class="stat-item">
+                            <h3>10K+</h3>
+                            <p>Students Enrolled</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>50+</h3>
+                            <p>Certified Courses</p>
+                        </div>
+                    </div>
+
+                    <div class="author-buttons">
+                        <a href="#" class="btn-contact-author">Get a Free Demo</a>
+                        <a href="#" class="btn-shop-now">View All Courses</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- =========================================
+         LOGIN & SIGN UP MODAL
+    ========================================== -->
+    <div id="auth-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+
+            <div class="modal-tabs">
+                <button class="tab-button active" data-tab="login">Login</button>
+                <button class="tab-button" data-tab="register">Sign Up</button>
+            </div>
+
+            <!-- Login Form -->
+            <div id="login-form" class="auth-form">
+                <h3>Login to Bokify</h3>
+                <input type="email" placeholder="Email Address">
+                <input type="password" placeholder="Password">
+                <button class="btn-primary-modal">Login</button>
+            </div>
+
+            <!-- Register Form -->
+            <div id="register-form" class="auth-form hidden">
+                <h3>Create Account</h3>
+                <input type="email" placeholder="Email Address">
+                <input type="password" placeholder="Create Password">
+                <input type="password" placeholder="Confirm Password">
+                <button class="btn-primary-modal">Register</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- =========================================
+         FOOTER SECTION
+    ========================================== -->
+    <footer id="contact" class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo">Bokify</div>
+                    <p>Empowering the next generation with high-quality, accessible, and engaging online education.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Platform</h3>
+                    <ul>
+                        <li><a href="#">All Courses</a></li>
+                        <li><a href="#">Coding</a></li>
+                        <li><a href="#">Mathematics</a></li>
+                        <li><a href="#">Robotics</a></li>
+                        <li><a href="#">Science</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Bokify. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js">
+    </script>
+
+
+</body>
+
+</html>
