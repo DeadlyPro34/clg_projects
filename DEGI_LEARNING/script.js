@@ -1,11 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- 1. INITIAL SETUP ---
-    // Trigger "All" category by default to show all courses
-    const allButton = document.querySelector('.category-tabs button[data-category="all"]');
-    if (allButton) {
-        selectCategory(allButton);
-    }
-
     // --- 2. MODAL VARIABLES ---
     const userIcon = document.querySelector('.user-icon');
     const authModal = document.getElementById('auth-modal');
@@ -61,28 +54,5 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// --- 5. CATEGORY FILTERING FUNCTION ---
-// Handles showing/hiding course cards based on selected category
-function selectCategory(buttonElement) {
-    const selectedCategory = buttonElement.getAttribute('data-category');
-
-    // Update active state of buttons
-    const buttons = document.querySelectorAll('.category-tabs button');
-    buttons.forEach(btn => {
-        btn.classList.remove('active');
-    });
-    buttonElement.classList.add('active');
-
-    // Filter cards
-    const cards = document.querySelectorAll('.book-card');
-    cards.forEach(card => {
-        const cardCategory = card.getAttribute('data-category');
-
-        if (selectedCategory === 'all' || cardCategory === selectedCategory) {
-            card.classList.remove('hidden');
-        } else {
-            card.classList.add('hidden');
-        }
-    });
-}
+// Initialize Lucide Icons
 lucide.createIcons();
