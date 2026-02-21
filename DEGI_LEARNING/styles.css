@@ -159,28 +159,12 @@ body {
     color: #666;
 }
 
-.user-icon,
-.cart-icon {
+.user-icon {
     transition: color 0.3s ease;
 }
 
-.user-icon:hover,
-.cart-icon:hover {
+.user-icon:hover {
     color: var(--primary-color);
-}
-
-.cart-icon {
-    background-color: var(--primary-color);
-    color: white;
-    border-radius: 50%;
-    width: 25px;
-    height: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    margin-left: 10px;
-    margin-right: 5px;
 }
 
 /* --- 4. HERO SECTION STYLES --- */
@@ -327,32 +311,6 @@ body {
     margin: 0 auto 40px;
 }
 
-.category-tabs {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 50px;
-    flex-wrap: wrap;
-}
-
-.category-tabs button {
-    background-color: transparent;
-    border: 1px solid #ddd;
-    color: var(--text-color);
-    padding: 10px 25px;
-    border-radius: 50px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.category-tabs button:hover,
-.category-tabs button.active {
-    background-color: var(--primary-color);
-    color: white;
-    border-color: var(--primary-color);
-}
-
 .book-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -418,17 +376,13 @@ body {
     margin-left: 5px;
 }
 
-/* --- 6. PLATFORM FEATURES (ABOUT) SECTION --- */
-/* 1. Main Section Wrapper */
-.book-features-section {
-    width: 100%;
-    padding: 3rem 0;
+/* --- 6. ROADMAP (ABOUT) SECTION STYLES --- */
+.roadmap-section {
+    padding: 80px 0;
     background-color: var(--bg-gray);
+    position: relative;
 }
 
-/* 2. Container (Features specific) - using generic container but ensuring compatibility */
-
-/* 3. Lead (Intro) */
 .lead {
     text-align: center;
     margin-bottom: 3rem;
@@ -450,285 +404,188 @@ body {
     line-height: 1.625;
 }
 
-/* 4. Grid */
-.features-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
-}
-
-/* 5. Feature Item (Card) */
-.feature-item {
-    background-color: white;
-    border-radius: 1rem;
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    border: 1px solid var(--border-light);
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    height: 100%;
+.timeline {
     position: relative;
-    /* Needed for absolute positioning of arrow-link */
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px 0;
 }
 
-.feature-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-}
-
-.feature-item h3 {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--text-dark);
-    margin-bottom: 1rem;
-}
-
-.feature-item p {
-    color: var(--text-gray);
-    line-height: 1.625;
-    font-size: 0.875rem;
-    margin-bottom: 4rem;
-    /* Spacing for the arrow button */
-}
-
-/* 6. Icon Box */
-.icon-box {
-    margin-bottom: 1.5rem;
-    padding: 1rem;
-}
-
-.icon-box svg {
-    width: 3rem;
-    height: 3rem;
-    color: var(--primary-blue);
-}
-
-/* 7. Arrow Link */
-.arrow-link {
+/* Vertical Line */
+.timeline::after {
+    content: '';
     position: absolute;
-    bottom: 2rem;
+    width: 4px;
+    background-color: var(--primary-color);
+    top: 0;
+    bottom: 0;
     left: 50%;
-    transform: translateX(-50%);
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 9999px;
-    border: 1px solid var(--border-gray);
+    margin-left: -2px;
+    border-radius: 2px;
+    opacity: 0.2;
+}
+
+.timeline-item {
+    padding: 10px 40px;
+    position: relative;
+    background-color: inherit;
+    width: 50%;
+    box-sizing: border-box;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Left side items */
+.timeline-item.left {
+    left: 0;
+    text-align: right;
+}
+
+/* Right side items */
+.timeline-item.right {
+    left: 50%;
+    text-align: left;
+}
+
+/* The Dot */
+.timeline-dot {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    right: -10px;
+    background-color: white;
+    border: 4px solid var(--primary-color);
+    top: 25px;
+    border-radius: 50%;
+    z-index: 2;
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.2);
+}
+
+.timeline-item.right .timeline-dot {
+    left: -10px;
+}
+
+/* Content Box */
+.timeline-content {
+    padding: 25px;
+    background-color: white;
+    position: relative;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    border: 1px solid white;
+    transition: transform 0.3s ease;
+}
+
+.timeline-content:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary-color);
+}
+
+.timeline-date {
+    display: inline-block;
+    padding: 6px 14px;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    letter-spacing: 0.5px;
+}
+
+.timeline-content h3 {
+    margin-bottom: 10px;
+    color: var(--text-dark);
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.timeline-content p {
+    color: var(--text-gray);
+    font-size: 15px;
+}
+
+/* Responsive Breakpoints for Roadmap */
+@media screen and (max-width: 768px) {
+    .timeline::after {
+        left: 31px;
+    }
+
+    .timeline-item {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 25px;
+        text-align: left;
+        /* Force left align on mobile */
+    }
+
+    .timeline-item.left,
+    .timeline-item.right {
+        left: 0;
+        text-align: left;
+    }
+
+    .timeline-item.left .timeline-dot,
+    .timeline-item.right .timeline-dot {
+        left: 21px;
+        /* Align with line */
+        right: auto;
+    }
+}
+
+/* --- 7. HOW IT WORKS SECTION --- */
+.process-section {
+    padding: 80px 0;
+    background-color: white;
+    text-align: center;
+}
+
+.process-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    margin-top: 50px;
+    flex-wrap: wrap;
+}
+
+.process-step {
+    flex: 1;
+    min-width: 250px;
+    position: relative;
+    padding: 20px;
+}
+
+.step-icon-box {
+    width: 80px;
+    height: 80px;
+    background: var(--background-soft-blue);
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #9ca3af;
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-}
-
-.arrow-link svg {
-    width: 1.25rem;
-    height: 1.25rem;
-}
-
-.feature-item:hover .arrow-link {
-    background-color: var(--primary-blue);
-    color: white;
-    border-color: var(--primary-blue);
-}
-
-/* Responsive Breakpoints */
-@media (min-width: 768px) {
-    .lead h2 {
-        font-size: 2.25rem;
-    }
-
-    .features-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (min-width: 1024px) {
-    .features-grid {
-        grid-template-columns: repeat(4, 1fr);
-    }
-}
-
-/* --- 7. EDUCATOR/INSTRUCTOR SECTION --- */
-.author-section {
-    background-color: white;
-    padding: 100px 0;
-    overflow: hidden;
-}
-
-.author-content {
-    display: flex;
-    gap: 60px;
-    align-items: center;
-}
-
-.author-image-column {
-    flex: 1;
-    position: relative;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
-    max-width: 50%;
-}
-
-.author-image-column img {
-    width: 100%;
-    height: auto;
-    border-radius: 12px;
-    display: block;
-}
-
-.bestseller-badge {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    background-color: var(--success-color);
-    color: white;
-    padding: 8px 15px;
-    border-radius: 4px;
-    font-size: 14px;
-    font-weight: 600;
-    z-index: 5;
-}
-
-.reviews-card {
-    position: absolute;
-    bottom: -30px;
-    right: -30px;
-    background-color: white;
-    padding: 15px 25px;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 5px;
-    font-size: 14px;
-    font-weight: 500;
-    z-index: 15;
-}
-
-.reviews-card .rating-row {
-    display: flex;
-    align-items: center;
-    margin-bottom: 5px;
-}
-
-.reviews-card .avatars {
-    display: flex;
-    position: relative;
-    margin-right: 10px;
-}
-
-.reviews-card .avatar-img {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    border: 2px solid white;
-    margin-left: -10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    object-fit: cover;
-}
-
-.reviews-card .avatar-img:first-child {
-    margin-left: 0;
-}
-
-.reviews-card .stars {
-    color: #FFD700;
-    font-size: 16px;
-}
-
-.reviews-card .stars .fas {
-    margin-right: -2px;
-}
-
-.author-text-column {
-    flex: 1;
-    max-width: 50%;
-}
-
-.author-text-column .meet-author-tag {
-    font-size: 16px;
+    margin: 0 auto 25px;
     color: var(--primary-color);
-    font-weight: 600;
-    margin-bottom: 10px;
+    font-size: 32px;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 20px rgba(0, 123, 255, 0.1);
 }
 
-.author-text-column h2 {
-    font-size: 48px;
-    font-weight: 700;
-    color: #222;
-    margin-bottom: 20px;
-    line-height: 1.2;
-}
-
-.author-text-column p {
-    font-size: 16px;
-    color: #555;
-    margin-bottom: 30px;
-}
-
-.author-stats {
-    display: flex;
-    gap: 60px;
-    margin-bottom: 40px;
-}
-
-.stat-item h3 {
-    font-size: 40px;
-    font-weight: 700;
-    color: #222;
-    margin-bottom: 5px;
-}
-
-.stat-item p {
-    font-size: 16px;
-    color: #777;
-    margin: 0;
-}
-
-.author-buttons {
-    display: flex;
-    gap: 15px;
-}
-
-.btn-contact-author {
-    background-color: var(--primary-color);
+.process-step:hover .step-icon-box {
+    background: var(--primary-color);
     color: white;
-    padding: 14px 30px;
-    text-decoration: none;
-    border-radius: 6px;
-    font-weight: 600;
-    font-size: 16px;
-    transition: background-color 0.3s, transform 0.2s;
+    transform: translateY(-5px);
 }
 
-.btn-contact-author:hover {
-    background-color: var(--dark-blue);
-    transform: translateY(-2px);
+.process-step h3 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #222;
 }
 
-.btn-shop-now {
-    background-color: white;
-    color: var(--text-color);
-    border: 1px solid #ddd;
-    padding: 14px 30px;
-    text-decoration: none;
-    border-radius: 6px;
-    font-weight: 600;
-    font-size: 16px;
-    transition: background-color 0.3s, color 0.3s, transform 0.2s, border-color 0.3s;
-}
-
-.btn-shop-now:hover {
-    background-color: #f0f0f0;
-    color: var(--primary-color);
-    border-color: var(--primary-color);
-    transform: translateY(-2px);
+.process-step p {
+    color: #666;
+    font-size: 15px;
+    line-height: 1.6;
 }
 
 /* --- 8. FOOTER STYLES --- */
@@ -862,13 +719,6 @@ body {
 
     .author-text-column h2 {
         font-size: 36px;
-    }
-
-    .reviews-card {
-        bottom: 0;
-        right: 50%;
-        transform: translateX(50%);
-        padding: 10px 20px;
     }
 
     .book-grid {
