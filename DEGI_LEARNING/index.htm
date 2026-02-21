@@ -13,9 +13,10 @@
          EXTERNAL RESOURCES (Fonts & Icons)
     ========================================== -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
     <script src="https://unpkg.com/lucide@latest"></script>
-
+    
+    <!-- Link to Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -31,21 +32,16 @@
             <nav class="nav-links">
                 <ul>
                     <li><a href="#home">Home</a></li>
-                    <li><a href="#courses">All Courses</a></li>
+                    <li><a href="Explore_page/explore_page.html">All Courses</a></li>
+                    <li><a href="#process">Process</a></li>
                     <li><a href="#about">About Us</a></li>
-                    <li><a href="#educators">Educators</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
 
-            <!-- Nav Icons (Search, User, Cart) -->
+            <!-- Nav Icons -->
             <div class="nav-icons">
-                <div class="search-box">
-                    <input type="text" placeholder="Search">
-                    <button><i class="fas fa-search"></i></button>
-                </div>
                 <a href="#" class="user-icon"><i class="fas fa-user"></i></a>
-                <a href="#" class="cart-icon"><i class="fas fa-shopping-cart"></i></a>
             </div>
         </div>
     </header>
@@ -90,19 +86,6 @@
                     Discover our most popular courses taught by industry experts to help your child excel in the digital
                     world.
                 </p>
-
-                <!-- Filter Tabs -->
-                <div class="category-tabs">
-                    <button class="active" onclick="selectCategory(this)" data-category="all">All Subjects</button>
-                    <button onclick="selectCategory(this)" data-category="coding">Coding</button>
-                    <button onclick="selectCategory(this)" data-category="mathematics">Mathematics</button>
-                    <button onclick="selectCategory(this)" data-category="science">Science</button>
-                    <button onclick="selectCategory(this)" data-category="arts">Creative Arts</button>
-                    <button onclick="selectCategory(this)" data-category="language">Language</button>
-                    <button onclick="selectCategory(this)" data-category="robotics">Robotics</button>
-                    <button onclick="selectCategory(this)" data-category="exam-prep">Exam Prep</button>
-                    <button onclick="selectCategory(this)" data-category="critical-thinking">Critical Thinking</button>
-                </div>
 
                 <!-- Course Cards Grid -->
                 <div class="book-grid">
@@ -208,134 +191,111 @@
         </section>
 
         <!-- =========================================
-             PLATFORM FEATURES (ABOUT) SECTION
+             ROADMAP (ABOUT US) SECTION
         ========================================== -->
-        <section id="about" class="book-features-section">
+        <section id="about" class="roadmap-section">
             <div class="container">
                 <!-- Intro Text -->
                 <div class="lead">
-                    <h2>Platform Top Features</h2>
+                    <h2>Our Journey</h2>
                     <p>
-                        Your trusted source for the finest digital education. We consistently provide tools that
-                        embody excellence and gain your child's confidence.
+                        From a small idea to a leading digital learning platform, here is how we grew to empower
+                        thousands of students worldwide.
                     </p>
                 </div>
 
-                <!-- Cards Grid -->
-                <div class="features-grid">
-
-                    <!-- Card 1: Interactive Lessons -->
-                    <div class="feature-item">
-                        <div class="icon-box">
-                            <i data-lucide="monitor"></i>
-                        </div>
-                        <h3>Interactive Lessons</h3>
-                        <p>
-                            High-quality, curriculum-aligned videos and interactive exercises designed for deep
-                            understanding and engagement.
-                        </p>
-                        <div class="arrow-link">
-                            <i data-lucide="arrow-right"></i>
+                <!-- Timeline -->
+                <div class="timeline">
+                    <!-- Item 1: 2020 -->
+                    <div class="timeline-item left">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-date">2020</span>
+                            <h3>The Inception</h3>
+                            <p>
+                                Bokify was founded with a simple mission: to make quality education accessible to every
+                                child, everywhere, amidst global changes.
+                            </p>
                         </div>
                     </div>
 
-                    <!-- Card 2: Certified Educators -->
-                    <div class="feature-item">
-                        <div class="icon-box">
-                            <i data-lucide="user"></i>
-                        </div>
-                        <h3>Certified Educators</h3>
-                        <p>
-                            Learn from certified, experienced, and passionate educators who make learning fun and
-                            effective.
-                        </p>
-                        <div class="arrow-link">
-                            <i data-lucide="arrow-right"></i>
+                    <!-- Item 2: 2022 -->
+                    <div class="timeline-item right">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-date">2022</span>
+                            <h3>First Milestone</h3>
+                            <p>
+                                Launched 100+ comprehensive courses covering Coding, Mathematics, and Robotics, impacting
+                                over 2,000 students.
+                            </p>
                         </div>
                     </div>
 
-                    <!-- Card 3: Progress Tracking -->
-                    <div class="feature-item">
-                        <div class="icon-box">
-                            <i data-lucide="trending-up"></i>
-                        </div>
-                        <h3>Progress Tracking</h3>
-                        <p>
-                            Real-time progress reports and performance analytics for parents to monitor their child's
-                            growth easily.
-                        </p>
-                        <div class="arrow-link">
-                            <i data-lucide="arrow-right"></i>
+                    <!-- Item 3: 2024 -->
+                    <div class="timeline-item left">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-date">2024</span>
+                            <h3>Community Growth</h3>
+                            <p>
+                                Reached 10,000 active learners and partnered with 50+ certified educators to bring
+                                specialized learning paths.
+                            </p>
                         </div>
                     </div>
 
-                    <!-- Card 4: Gamified Learning -->
-                    <div class="feature-item">
-                        <div class="icon-box">
-                            <i data-lucide="puzzle"></i>
-                        </div>
-                        <h3>Gamified Learning</h3>
-                        <p>
-                            Engaging challenges, rewards, and leaderboards to keep students motivated and excited about
-                            education.
-                        </p>
-                        <div class="arrow-link">
-                            <i data-lucide="arrow-right"></i>
+                    <!-- Item 4: 2026 -->
+                    <div class="timeline-item right">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-date">2026</span>
+                            <h3>Future Innovation</h3>
+                            <p>
+                                Launching immersive VR classrooms and a dedicated mobile ecosystem to redefine interactive remote education.
+                            </p>
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>
 
         <!-- =========================================
-             EDUCATORS & TESTIMONIALS SECTION
+             HOW IT WORKS (PROCESS) SECTION
         ========================================== -->
-        <section id="educators" class="author-section">
-            <div class="container author-content">
-                <div class="author-image-column">
-                    <img src="tutor.png" alt="Expert Educator" />
-                    <span class="bestseller-badge">Top Rated Educator</span>
-                    <div class="reviews-card">
-                        <div class="rating-row">
-                            <div class="avatars">
-                                <img src="std1.jpg" alt="Student 1" class="avatar-img" />
-                                <img src="std2.jpg" alt="Student 2" class="avatar-img" />
-                                <img src="std3.jpg" alt="Student 3" class="avatar-img" />
-                            </div>
-                            <div class="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                            </div>
-                        </div>
-                        <span>Average Rating 4.9</span>
-                    </div>
+        <section id="process" class="process-section">
+            <div class="container">
+                <div class="lead">
+                    <h2>How It Works</h2>
+                    <p>Master new skills in just three simple steps. We make learning easy, accessible, and rewarding.</p>
                 </div>
-
-                <div class="author-text-column">
-                    <p class="meet-author-tag">Meet Our Educators</p>
-                    <h2>Learn from the best, from the comfort of your home</h2>
-                    <p>Hamare educators experienced aur passionate hain, jo bacchon ko ghar baithe interactive aur
-                        engaging tareeke se padhate hain. Har bachhe ki zaroorat ko samajhte hue, hum personalized
-                        learning paths provide karte hain taaki aapka bachha har subject mein strong ban sake.</p>
-
-                    <div class="author-stats">
-                        <div class="stat-item">
-                            <h3>10K+</h3>
-                            <p>Students Enrolled</p>
+                
+                <div class="process-grid">
+                    <!-- Step 1 -->
+                    <div class="process-step">
+                        <div class="step-icon-box">
+                            <i class="fas fa-search"></i>
                         </div>
-                        <div class="stat-item">
-                            <h3>50+</h3>
-                            <p>Certified Courses</p>
-                        </div>
+                        <h3>1. Browse & Select</h3>
+                        <p>Explore our extensive library of courses ranging from Coding to Arts. Filter by age or interest to find the perfect match.</p>
                     </div>
 
-                    <div class="author-buttons">
-                        <a href="#" class="btn-contact-author">Get a Free Demo</a>
-                        <a href="#" class="btn-shop-now">View All Courses</a>
+                    <!-- Step 2 -->
+                    <div class="process-step">
+                        <div class="step-icon-box">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h3>2. Learn & Practice</h3>
+                        <p>Watch high-quality video lessons and solve interactive challenges. Our mentors are always there to guide you.</p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="process-step">
+                        <div class="step-icon-box">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <h3>3. Get Certified</h3>
+                        <p>Complete your final project to earn a verified certificate. Showcase your skills to the world and level up!</p>
                     </div>
                 </div>
             </div>
@@ -429,10 +389,9 @@
             </div>
         </div>
     </footer>
-    <script src="script.js">
-    </script>
 
-
+    <!-- Link to Custom JS -->
+    <script src="script.js"></script>
 </body>
 
 </html>
