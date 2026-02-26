@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- =========================================
+         META TAGS & TITLE
+    ========================================== -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bokify - Digital Learning Platform</title>
+
+    <!-- =========================================
+         EXTERNAL RESOURCES (Fonts & Icons)
+    ========================================== -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Link to Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- =========================================
+         CURSOR STYLES
+    ========================================== -->
+    <style>
+        /* Hide system cursor */
+        * {
+            cursor: none !important;
+        }
+
+        /* Cursor Elements */
+        .cursor-outer, .cursor-inner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 99999;
+            border-radius: 50%;
+            /* mix-blend-mode creates a premium look that inverts colors based on background */
+            mix-blend-mode: difference;
+            will-change: transform;
+        }
+
+        .cursor-outer {
+            width: 40px;
+            height: 40px;
+            border: 1.5px solid #ffffff; 
+            transition: width 0.3s ease, height 0.3s ease, background 0.3s ease, border-radius 0.3s ease;
+        }
+
+        .cursor-inner {
+            width: 8px;
+            height: 8px;
+            background: #ffffff;
+            transition: transform 0.1s ease-out, opacity 0.3s ease;
+        }
+
+        /* Hover State: Expands the outer ring and fades the inner dot */
+        body.cursor-hover .cursor-outer {
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.15);
+            border-width: 1px;
+        }
+
+        body.cursor-hover .cursor-inner {
+            opacity: 0;
+        }
+
+        /* Clicking State: Tactical feedback on click */
+        body.cursor-clicking .cursor-outer {
+            transform: scale(0.8);
+            background: rgba(255, 255, 255, 0.4);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- =========================================
+         CURSOR HTML
+    ========================================== -->
+    <div class="cursor-outer"></div>
+    <div class="cursor-inner"></div>
+
+    <!-- =========================================
+         HEADER & NAVIGATION BAR
+    ========================================== -->
+    <header class="navbar">
+        <div class="container">
+            <!-- Logo -->
+            <div class="logo">
+                <img src="your-logo.png" alt="Bokify Logo" class="logo-img" onerror="this.src='https://via.placeholder.com/36x36/007bff/ffffff?text=B'">
+                Bokify
+            </div>
+
+            <!-- Nav Links -->
+            <nav class="nav-links">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="Explore_page/explore_page.html">All Courses</a></li>
+                    <li><a href="#process">Process</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+
+            <!-- Nav Icons -->
+            <div class="nav-icons">
+                <a href="/login_dashboard/login.html" class="user-icon"><i class="fas fa-user"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- =========================================
+             HERO SECTION (Banner)
+        ========================================== -->
+        <section id="home" class="hero-section">
+            <div class="container hero-content">
+                <!-- Text Content -->
+                <div class="text-content">
+                    <p class="author-tag">By top educators</p>
+                    <h1>Find the perfect online course for your child</h1>
+                    <a href="login_dashboard/explore_page.html" class="btn-buy-book">Explore Courses</a>
+                    <div class="retailers">
+                        <span class="retailer-logo"
+                            style="background-image: url('https://via.placeholder.com/80x20/F0F0F0/000000?text=Trusted+By+Parents')"></span>
+                        <span class="retailer-logo"
+                            style="background-image: url('https://via.placeholder.com/80x20/F0F0F0/000000?text=Safe+%26+Secure')"></span>
+                        <span class="retailer-logo"
+                            style="background-image: url('https://via.placeholder.com/80x20/F0F0F0/000000?text=24%2F7+Support')"></span>
+                    </div>
+                </div>
+
+                <!-- Hero Images -->
+                <div class="book-image-container">
+                    <img src="BOOK2.png" alt="Online Course Ebook" class="book-cover main-book" />
+                    <img src="BOOK1.jpg" alt="Study Guide" class="book-cover secondary-book" />
+                </div>
+            </div>
+        </section>
+
+
+        <!-- =========================================
+             FEATURED COURSES GRID
+        ========================================== -->
+        <section id="courses" class="collection-section">
+            <div class="container">
+                <h2>Featured Courses</h2>
+                <p class="description">
+                    Discover our most popular courses taught by industry experts to help your child excel in the digital
+                    world.
+                </p>
+
+                <!-- Course Cards Grid -->
+                <div class="book-grid">
+
+                    <div class="book-card" data-category="coding">
+                        <img src="fundamental-kids-coding.jpg" alt="Coding Course Thumbnail" class="cover-image" />
+                        <div>
+                            <div class="rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                    class="fas fa-star"></i><i class="far fa-star"></i>
+                            </div>
+                            <h3>Coding Fundamentals for Kids</h3>
+                            <span class="price">₹ 3,999 <span class="old-price">₹ 6,499</span></span>
+                        </div>
+                    </div>
+
+                    <div class="book-card" data-category="mathematics">
+                        <img src="math-class.jpg" alt="Math Course Thumbnail" class="cover-image" />
+                        <div>
+                            <div class="rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                    class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                            <h3>Advanced Math Skills (Grade 7+)</h3>
+                            <span class="price">₹ 4,799 <span class="old-price">₹ 5,499</span></span>
+                        </div>
+                    </div>
+
+                    <div class="book-card" data-category="robotics">
+                        <img src="robotic-class.jpg" alt="Robotics Course Thumbnail" class="cover-image" />
+                        <div>
+                            <div class="rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                    class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                            <h3>Introduction to Robotics</h3>
+                            <span class="price">₹ 5,299</span>
+                        </div>
+                    </div>
+
+                    <div class="book-card" data-category="arts">
+                        <img src="art-class.jpg" alt="Art Course Thumbnail" class="cover-image" />
+                        <div>
+                            <div class="rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                    class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                            <h3>Digital Art Masterclass</h3>
+                            <span class="price">₹ 3,599</span>
+                        </div>
+                    </div>
+
+                    <div class="book-card" data-category="science">
+                        <img src="sci-class.jpg" alt="Science Course Thumbnail" class="cover-image" />
+                        <div>
+                            <div class="rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                    class="fas fa-star"></i><i class="far fa-star"></i>
+                            </div>
+                            <h3>Science: Space Exploration</h3>
+                            <span class="price">₹ 3,199 <span class="old-price">₹ 4,199</span></span>
+                        </div>
+                    </div>
+
+                    <div class="book-card" data-category="language">
+                        <img src="lang-course.jpg" alt="Language Course Thumbnail" class="cover-image" />
+                        <div>
+                            <div class="rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                    class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                            <h3>Creative Writing Workshop</h3>
+                            <span class="price">₹ 2,999</span>
+                        </div>
+                    </div>
+
+                    <div class="book-card" data-category="critical-thinking">
+                        <img src="finance.jpg" alt="Math Course Thumbnail" class="cover-image" />
+                        <div>
+                            <div class="rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                    class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                            <h3>Financial Literacy for Teens</h3>
+                            <span class="price">₹ 4,999</span>
+                        </div>
+                    </div>
+
+                    <div class="book-card" data-category="coding">
+                        <img src="online-coding.jpg" alt="Coding Course Thumbnail" class="cover-image" />
+                        <div>
+                            <div class="rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                    class="fas fa-star"></i><i class="far fa-star"></i>
+                            </div>
+                            <h3>Web Development Basics</h3>
+                            <span class="price">₹ 5,999 <span class="old-price">₹ 7,999</span></span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================
+             ROADMAP (ABOUT US) SECTION
+        ========================================== -->
+        <section id="about" class="roadmap-section">
+            <div class="container">
+                <!-- Intro Text -->
+                <div class="lead">
+                    <h2>Our Journey</h2>
+                    <p>
+                        From a small idea to a leading digital learning platform, here is how we grew to empower
+                        thousands of students worldwide.
+                    </p>
+                </div>
+
+                <!-- Timeline -->
+                <div class="timeline">
+                    <!-- Item 1: 2020 -->
+                    <div class="timeline-item left">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-date">2020</span>
+                            <h3>The Inception</h3>
+                            <p>
+                                Bokify was founded with a simple mission: to make quality education accessible to every
+                                child, everywhere, amidst global changes.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Item 2: 2022 -->
+                    <div class="timeline-item right">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-date">2022</span>
+                            <h3>First Milestone</h3>
+                            <p>
+                                Launched 100+ comprehensive courses covering Coding, Mathematics, and Robotics, impacting
+                                over 2,000 students.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Item 3: 2024 -->
+                    <div class="timeline-item left">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-date">2024</span>
+                            <h3>Community Growth</h3>
+                            <p>
+                                Reached 10,000 active learners and partnered with 50+ certified educators to bring
+                                specialized learning paths.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Item 4: 2026 -->
+                    <div class="timeline-item right">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-date">2026</span>
+                            <h3>Future Innovation</h3>
+                            <p>
+                                Launching immersive VR classrooms and a dedicated mobile ecosystem to redefine interactive remote education.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================
+             HOW IT WORKS (PROCESS) SECTION
+        ========================================== -->
+        <section id="process" class="process-section">
+            <div class="container">
+                <div class="lead">
+                    <h2>How It Works</h2>
+                    <p>Master new skills in just three simple steps. We make learning easy, accessible, and rewarding.</p>
+                </div>
+                
+                <div class="process-grid">
+                    <!-- Step 1 -->
+                    <div class="process-step">
+                        <div class="step-icon-box">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h3>1. Browse & Select</h3>
+                        <p>Explore our extensive library of courses ranging from Coding to Arts. Filter by age or interest to find the perfect match.</p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="process-step">
+                        <div class="step-icon-box">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h3>2. Learn & Practice</h3>
+                        <p>Watch high-quality video lessons and solve interactive challenges. Our mentors are always there to guide you.</p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="process-step">
+                        <div class="step-icon-box">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <h3>3. Get Certified</h3>
+                        <p>Complete your final project to earn a verified certificate. Showcase your skills to the world and level up!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- =========================================
+         FOOTER SECTION
+    ========================================== -->
+    <footer id="contact" class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo">Bokify</div>
+                    <p>Empowering the next generation with high-quality, accessible, and engaging online education.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Platform</h3>
+                    <ul>
+                        <li><a href="#">All Courses</a></li>
+                        <li><a href="#">Coding</a></li>
+                        <li><a href="#">Mathematics</a></li>
+                        <li><a href="#">Robotics</a></li>
+                        <li><a href="#">Science</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Bokify. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Link to Custom JS -->
+    <script src="script.js"></script>
+
+    <!-- =========================================
+         CURSOR LOGIC
+    ========================================== -->
+    <script>
+        const cursorOuter = document.querySelector('.cursor-outer');
+        const cursorInner = document.querySelector('.cursor-inner');
+        
+        let mouseX = 0;
+        let mouseY = 0;
+        let outerX = 0;
+        let outerY = 0;
+
+        // Smooth follow logic for the outer cursor using requestAnimationFrame
+        function animateCursor() {
+            // Lerp (Linear Interpolation) for that smooth "trailing" effect
+            // Current pos + (Target pos - Current pos) * speed
+            outerX += (mouseX - outerX) * 0.15;
+            outerY += (mouseY - outerY) * 0.15;
+
+            cursorOuter.style.transform = `translate3d(${outerX - 20}px, ${outerY - 20}px, 0)`;
+            cursorInner.style.transform = `translate3d(${mouseX - 4}px, ${mouseY - 4}px, 0)`;
+
+            requestAnimationFrame(animateCursor);
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        // Interactive States: Hover
+        const hoverTargets = document.querySelectorAll('a, button, .book-card, .social-links a, .logo, .user-icon');
+        
+        hoverTargets.forEach(target => {
+            target.addEventListener('mouseenter', () => {
+                document.body.classList.add('cursor-hover');
+            });
+            target.addEventListener('mouseleave', () => {
+                document.body.classList.remove('cursor-hover');
+            });
+        });
+
+        // Interactive States: Click
+        document.addEventListener('mousedown', () => {
+            document.body.classList.add('cursor-clicking');
+        });
+        document.addEventListener('mouseup', () => {
+            document.body.classList.remove('cursor-clicking');
+        });
+
+        // Start animation loop
+        animateCursor();
+    </script>
+</body>
+
+</html>
