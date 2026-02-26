@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Bokify</title>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="admin_dashboard.css">
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <i class="fas fa-shield-alt"></i> Bokify Admin
+        </div>
+        <ul class="nav-links">
+            <li class="nav-item active" onclick="switchTab('dashboard', this)">
+                <i class="fas fa-home"></i> Dashboard
+            </li>
+            <li class="nav-item" onclick="switchTab('courses', this)">
+                <i class="fas fa-book"></i> Manage Courses
+            </li>
+            <li class="nav-item" onclick="switchTab('students', this)">
+                <i class="fas fa-users"></i> Students
+            </li>
+            <li class="nav-item" onclick="switchTab('earnings', this)">
+                <i class="fas fa-dollar-sign"></i> Earnings
+            </li>
+            <li class="nav-item" onclick="switchTab('settings', this)">
+                <i class="fas fa-cog"></i> Settings
+            </li>
+            <li class="nav-item" style="margin-top: auto;" onclick="logout()">
+                <div style="display:flex; gap:15px; color:inherit; text-decoration:none;">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </div>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="search-bar">
+                <i class="fas fa-search" style="color:#aaa;"></i>
+                <input type="text" placeholder="Search...">
+            </div>
+            <div class="admin-profile">
+                <span>Hello, <strong>Admin</strong></span>
+                <div class="admin-img">AD</div>
+            </div>
+        </div>
+
+        <div class="content-padding">
+
+            <!-- === VIEW: DASHBOARD === -->
+            <section id="view-dashboard" class="fade-in">
+                <div class="stats-container">
+                    <div class="stat-widget">
+                        <div class="stat-text">
+                            <h4>0</h4>
+                            <span>Total Students</span>
+                        </div>
+                        <div class="stat-icon" style="background:#e0e7ff; color:#4f46e5;">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                    </div>
+                    <div class="stat-widget">
+                        <div class="stat-text">
+                            <h4>0</h4>
+                            <span>Active Courses</span>
+                        </div>
+                        <div class="stat-icon" style="background:#d1fae5; color:#10b981;">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                    </div>
+                    <div class="stat-widget">
+                        <div class="stat-text">
+                            <h4>₹ 0</h4>
+                            <span>Total Revenue</span>
+                        </div>
+                        <div class="stat-icon" style="background:#ffedd5; color:#f97316;">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                    </div>
+                    <div class="stat-widget">
+                        <div class="stat-text">
+                            <h4>0</h4>
+                            <span>Total Sales</span>
+                        </div>
+                        <div class="stat-icon" style="background:#fee2e2; color:#ef4444;">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3>Recent Enrollments</h3>
+                        <span style="font-size:12px; color:#777;">Last 30 Days</span>
+                    </div>
+                    <!-- Recent Orders Table (populated by JS) -->
+                    <table id="recentOrdersTable">
+                        <thead>
+                            <tr>
+                                <th>Student Name</th>
+                                <th>Course</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Data will be injected here via admin_dashboard.js -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- === VIEW: MANAGE COURSES === -->
+            <section id="view-courses" class="fade-in hidden">
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3>Course Catalog</h3>
+                        <button class="btn-action" onclick="openModal('addCourseModal')">+ Add New Course</button>
+                    </div>
+                    <!-- Courses Table (populated by JS) -->
+                    <table id="coursesTable">
+                        <thead>
+                            <tr>
+                                <th>Course Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Students</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Data will be injected here via admin_dashboard.js -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- === VIEW: STUDENTS === -->
+            <section id="view-students" class="fade-in hidden">
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3>Student Directory</h3>
+                        <div class="search-bar" style="width: 250px;">
+                            <input type="text" placeholder="Filter students...">
+                        </div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Enrolled</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>John Doe</td>
+                                <td>john@example.com</td>
+                                <td>Active courses</td>
+                                <td><span class="status active">Active</span></td>
+                                <td><button class="btn-action btn-sm">View</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- === VIEW: EARNINGS === -->
+            <section id="view-earnings" class="fade-in hidden">
+                <div class="stats-container">
+                    <div class="stat-widget">
+                        <div class="stat-text">
+                            <h4>₹ 0</h4>
+                            <span>Total Revenue</span>
+                        </div>
+                        <div class="stat-icon" style="background:#d1fae5; color:#059669;">
+                            <i class="fas fa-arrow-up"></i>
+                        </div>
+                    </div>
+                    <div class="stat-widget">
+                        <div class="stat-text">
+                            <h4>₹ 0</h4>
+                            <span>Refunds</span>
+                        </div>
+                        <div class="stat-icon" style="background:#fee2e2; color:#dc2626;">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Earnings Chart Container (Chart.js will render here) -->
+                <div class="placeholder-chart">
+                    <i class="fas fa-chart-bar"></i>
+                    <h3>Loading Financial Data...</h3>
+                </div>
+            </section>
+
+            <!-- === VIEW: SETTINGS === -->
+            <section id="view-settings" class="fade-in hidden">
+                <div class="table-card" style="max-width: 600px;">
+                    <h3>Platform Settings</h3><br>
+                    <div class="form-group">
+                        <label>Site Name</label>
+                        <input type="text" class="form-control" value="Bokify">
+                    </div>
+                    <div class="form-group">
+                        <label>Support Email</label>
+                        <input type="email" class="form-control" value="admin@bokify.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Maintenance Mode</label>
+                        <select class="form-control">
+                            <option>Off</option>
+                            <option>On</option>
+                        </select>
+                    </div>
+                    <button class="btn-action" onclick="showToast('Settings Saved')">Save Changes</button>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Modal for Adding New Course -->
+    <div id="addCourseModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Course</h3>
+                <span class="close-modal" onclick="closeModal('addCourseModal')">&times;</span>
+            </div>
+            <form onsubmit="event.preventDefault(); addNewCourse();">
+                <div class="form-group">
+                    <label>Course Title</label>
+                    <input type="text" id="newCourseTitle" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="newCourseCat" class="form-control">
+                        <option value="coding">Coding & Tech</option>
+                        <option value="mathematics">Mathematics</option>
+                        <option value="science">Science & Robotics</option>
+                        <option value="arts">Arts & Design</option>
+                        <option value="languages">Languages</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Price (₹)</label>
+                    <input type="number" id="newCoursePrice" class="form-control" required min="0">
+                </div>
+                <button type="submit" class="btn-action" style="width:100%">Create Course</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMsg">Action Successful</span>
+    </div>
+
+    <!-- Custom Logic Script -->
+    <script src="admin_dashboard.js"></script>
+</body>
+
+</html>
