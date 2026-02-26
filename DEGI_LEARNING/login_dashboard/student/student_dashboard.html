@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - Bokify</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="student_dashboard.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="logo">Bokify <span>.</span></a>
+        <div class="user-menu">
+            <i class="far fa-bell" onclick="showToast('No new notifications')"></i>
+            <div class="user-avatar">JD</div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="nav-item active" onclick="switchTab('dashboard', this)">
+                <i class="fas fa-th-large"></i> <span>Dashboard</span>
+            </div>
+            <div class="nav-item" onclick="switchTab('courses', this)">
+                <i class="fas fa-book-open"></i> <span>My Courses</span>
+            </div>
+            <div class="nav-item" onclick="switchTab('progress', this)">
+                <i class="fas fa-chart-line"></i> <span>Progress</span>
+            </div>
+            <div class="nav-item" onclick="switchTab('certificates', this)">
+                <i class="fas fa-certificate"></i> <span>Certificates</span>
+            </div>
+            <div class="nav-item" onclick="switchTab('settings', this)">
+                <i class="fas fa-cog"></i> <span>Settings</span>
+            </div>
+            
+            <div class="nav-item logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            
+            <!-- === VIEW: DASHBOARD === -->
+            <section id="view-dashboard" class="fade-in">
+                <div class="welcome-banner">
+                    <div class="welcome-text">
+                        <h1>Welcome back, John! 👋</h1>
+                        <p>You've completed 80% of your weekly goal. Keep it up!</p>
+                    </div>
+                    <div class="banner-stat">
+                        <span>Current Streak</span>
+                        <div class="streak-count">🔥 5 Days</div>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon bg-blue"><i class="fas fa-book"></i></div>
+                        <div class="stat-info"><h3>4</h3><p>Courses Enrolled</p></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon bg-yellow"><i class="fas fa-clock"></i></div>
+                        <div class="stat-info"><h3>12h</h3><p>Hours Learned</p></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon bg-green"><i class="fas fa-award"></i></div>
+                        <div class="stat-info"><h3>1</h3><p>Certificates</p></div>
+                    </div>
+                </div>
+
+                <div class="section-header">
+                    <h2 class="section-title">Continue Learning</h2>
+                    <a href="#" onclick="switchTab('courses', document.querySelectorAll('.nav-item')[1])" class="view-all-link">View All</a>
+                </div>
+
+                <div class="courses-grid">
+                    <div class="course-card">
+                        <img src="fundamental-kids-coding.jpg" class="course-img" onerror="this.src='https://via.placeholder.com/300x160?text=Coding'">
+                        <div class="course-body">
+                            <div class="course-title">Coding Fundamentals</div>
+                            <div class="progress-container">
+                                <div class="progress-info"><span>Progress</span><span>75%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 75%;"></div></div>
+                            </div>
+                            <a href="#" onclick="showToast('Resuming Course...')" class="btn-continue">Resume</a>
+                        </div>
+                    </div>
+                    <div class="course-card">
+                        <img src="math-class.jpg" class="course-img" onerror="this.src='https://via.placeholder.com/300x160?text=Math'">
+                        <div class="course-body">
+                            <div class="course-title">Advanced Mathematics</div>
+                            <div class="progress-container">
+                                <div class="progress-info"><span>Progress</span><span>30%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 30%; background-color: var(--warning-color);"></div></div>
+                            </div>
+                            <a href="#" onclick="showToast('Resuming Course...')" class="btn-continue">Resume</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- === VIEW: COURSES === -->
+            <section id="view-courses" class="fade-in hidden">
+                <h2 class="section-title" style="margin-bottom: 20px;">My Enrolled Courses</h2>
+                <div class="courses-grid">
+                    <div class="course-card">
+                        <img src="fundamental-kids-coding.jpg" class="course-img" onerror="this.src='https://via.placeholder.com/300x160?text=Coding'">
+                        <div class="course-body">
+                            <div class="course-title">Coding Fundamentals</div>
+                            <div class="progress-container">
+                                <div class="progress-info"><span>Progress</span><span>75%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 75%;"></div></div>
+                            </div>
+                            <a href="#" class="btn-continue">Continue</a>
+                        </div>
+                    </div>
+                    <div class="course-card">
+                        <img src="lang-course.jpg" class="course-img" onerror="this.src='https://via.placeholder.com/300x160?text=English'">
+                        <div class="course-body">
+                            <div class="course-title">Creative English</div>
+                            <div class="progress-container">
+                                <div class="progress-info"><span style="color:var(--success-color)">Completed</span><span>100%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 100%;"></div></div>
+                            </div>
+                            <button onclick="switchTab('certificates', document.querySelectorAll('.nav-item')[3])" class="btn-continue btn-outline">View Certificate</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- === VIEW: PROGRESS === -->
+            <section id="view-progress" class="fade-in hidden">
+                <h2 class="section-title" style="margin-bottom: 20px;">Learning Statistics</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon bg-blue"><i class="fas fa-fire"></i></div>
+                        <div class="stat-info"><h3>5</h3><p>Day Streak</p></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon bg-green"><i class="fas fa-check-circle"></i></div>
+                        <div class="stat-info"><h3>24</h3><p>Lessons Completed</p></div>
+                    </div>
+                </div>
+                <div class="placeholder-chart">
+                    <i class="fas fa-chart-area"></i>
+                    <h3>Activity Chart Placeholder</h3>
+                    <p>Detailed analytics graph would render here.</p>
+                </div>
+            </section>
+
+            <!-- === VIEW: CERTIFICATES === -->
+            <section id="view-certificates" class="fade-in hidden">
+                <h2 class="section-title" style="margin-bottom: 20px;">My Certificates</h2>
+                <div class="cert-card">
+                    <div class="cert-info">
+                        <i class="fas fa-award cert-icon"></i>
+                        <div>
+                            <h4>Creative English Workshop</h4>
+                            <p>Issued on Oct 20, 2025</p>
+                        </div>
+                    </div>
+                    <button class="btn-continue btn-small" onclick="showToast('Downloading Certificate...')">
+                        <i class="fas fa-download"></i> Download
+                    </button>
+                </div>
+            </section>
+
+            <!-- === VIEW: SETTINGS === -->
+            <section id="view-settings" class="fade-in hidden">
+                <h2 class="section-title" style="margin-bottom: 20px;">Account Settings</h2>
+                <div class="settings-card">
+                    <form onsubmit="event.preventDefault(); showToast('Profile Updated Successfully!');">
+                        <div class="profile-header">
+                            <div class="user-avatar-lg">JD</div>
+                            <button type="button" class="btn-change-photo">Change Photo</button>
+                        </div>
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" class="form-control" value="John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" class="form-control" value="john@example.com">
+                        </div>
+                        <button type="submit" class="btn-save">Save Changes</button>
+                    </form>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <div id="toast" class="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMsg">Action Successful</span>
+    </div>
+
+    <!-- Custom JS -->
+    <script src="student_dashboard.js"></script>
+</body>
+</html>
