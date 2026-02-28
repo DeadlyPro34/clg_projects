@@ -1,0 +1,375 @@
+        :root {
+            --primary-green: #2d6a4f;
+            --light-green: #95d5b2;
+            --accent-earth: #bc6c25;
+            --bg-cream: #f8f9fa;
+            --text-dark: #1b4332;
+        }
+
+        body {
+            scroll-behavior: smooth;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-cream);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        h1,
+        h2,
+        h3,
+        .brand-font {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* ============================= */
+        /* ✨ Custom Cursor */
+        /* ============================= */
+        .custom-cursor {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #2d6a4f;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background-color 0.2s, backdrop-filter 0.2s;
+            z-index: 10000;
+        }
+
+        .cursor-grow {
+            width: 45px !important;
+            height: 45px !important;
+            background: rgba(45, 106, 79, 0.15);
+            backdrop-filter: blur(3px);
+            border-color: transparent;
+        }
+
+        /* ============================= */
+        /* 🌊 Smooth Scrollbar */
+        /* ============================= */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #e9ecef;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #95d5b2, #2d6a4f);
+            border-radius: 50px;
+            transition: 0.3s ease;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #2d6a4f, #1b4332);
+        }
+
+        html {
+            scrollbar-width: thin;
+            scrollbar-color: #2d6a4f #e9ecef;
+        }
+
+        /* ============================= */
+        /* 🚀 Reveal Animations */
+        /* ============================= */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes heroFadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .navbar.shadow-sm {
+            background: rgba(255, 255, 255, 0.98);
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            font-weight: 600;
+            color: var(--text-dark) !important;
+            margin: 0 10px;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary-green);
+            transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .route-badge {
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 10px;
+            vertical-align: top;
+            margin-left: 2px;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 80vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&q=80&w=2000');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            margin-top: 56px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            animation: heroFadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+        }
+
+        .hero p {
+            opacity: 0;
+            animation: heroFadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+        }
+
+        .hero .hero-buttons {
+            opacity: 0;
+            animation: heroFadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+        }
+
+        /* Cards */
+        .guide-card {
+            border: none;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            background: white;
+            height: 100%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+        }
+
+        .guide-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-img-top {
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .guide-card:hover .card-img-top {
+            transform: scale(1.05);
+        }
+
+        .badge-eco {
+            background-color: var(--primary-green);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            display: inline-block;
+        }
+
+        /* Sections */
+        .page-section {
+            padding: 80px 0;
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .page-section.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Guide Detail Specifics */
+        .detail-hero {
+            height: 50vh;
+            border-radius: 30px;
+            background-size: cover;
+            background-position: center;
+            margin-bottom: -100px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .detail-content-box {
+            background: white;
+            border-radius: 30px;
+            padding: 60px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            position: relative;
+            z-index: 2;
+        }
+
+        .tip-card {
+            background: #f1f8f4;
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 4px solid var(--primary-green);
+        }
+
+        /* My Route Timeline */
+        .timeline-container {
+            position: relative;
+            padding-left: 50px;
+        }
+
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--light-green);
+            opacity: 0.4;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -38px;
+            top: 5px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--primary-green);
+            border: 4px solid white;
+            box-shadow: 0 0 0 2px var(--light-green);
+            z-index: 1;
+        }
+
+        .route-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .route-card:hover {
+            transform: translateX(10px);
+        }
+
+        .route-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 15px;
+            object-fit: cover;
+        }
+
+        /* Auth UI */
+        .auth-container {
+            max-width: 450px;
+            margin: 50px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .btn-eco {
+            background-color: var(--primary-green);
+            color: white;
+            border-radius: 12px;
+            padding: 12px 30px;
+            font-weight: 600;
+            border: none;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-eco:hover {
+            background-color: var(--text-dark);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(45, 106, 79, 0.2);
+        }
+
+        /* Feedback styling */
+        .feedback-star {
+            color: #ffc107;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .feedback-star:hover {
+            transform: scale(1.2);
+        }
+
+        footer {
+            background-color: var(--text-dark);
+            color: white;
+            padding: 60px 0 20px;
+        }
+
+        .custom-alert {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 9999;
+            display: none;
+        }
+
+        .icon-box {
+            transition: all 0.4s ease;
+        }
+
+        .icon-box:hover i {
+            transform: scale(1.15) rotate(5deg);
+        }
+
+        .icon-box i {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
