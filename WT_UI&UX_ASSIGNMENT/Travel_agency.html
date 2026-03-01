@@ -17,7 +17,6 @@
 </head>
 
 <body>
-
     <!-- Alert System -->
     <div id="statusAlert" class="alert alert-success custom-alert shadow" role="alert">
         Action Successful!
@@ -70,7 +69,8 @@
                     it.</p>
                 <div class="d-flex justify-content-center gap-3 hero-buttons">
                     <button class="btn btn-eco btn-lg px-5" onclick="showSection('guides')">Explore Guides</button>
-                    <button class="btn btn-outline-light btn-lg px-5 border-2" onclick="showSection('about')">Our Mission</button>
+                    <button class="btn btn-outline-light btn-lg px-5 border-2" onclick="showSection('about')">Our
+                        Mission</button>
                 </div>
             </div>
         </div>
@@ -106,80 +106,38 @@
     <section id="guides" class="page-section">
         <div class="container">
             <div class="row pt-5 mb-5 align-items-center reveal">
-                <div class="col-md-6">
+                <div class="col-lg-4">
                     <h2 class="display-5 fw-bold">Eco-Friendly Guides</h2>
-                    <p class="text-muted">Hand-picked destinations and sustainable travel blueprints.</p>
+                    <p class="text-muted">Hand-picked sustainable travel blueprints.</p>
                 </div>
-                <div class="col-md-6 text-md-end">
-                    <div class="btn-group shadow-sm rounded-3 overflow-hidden">
-                        <button class="btn btn-outline-success active" data-filter="all">All</button>
-                        <button class="btn btn-outline-success" data-filter="nature">Nature</button>
-                        <button class="btn btn-outline-success" data-filter="city">City</button>
+                <div class="col-lg-8">
+                    <div class="d-flex flex-column flex-md-row gap-3 justify-content-lg-end">
+                        <!-- Search Bar -->
+                        <div class="guide-search-wrapper w-100" style="max-width: 300px;">
+                            <i data-lucide="search" class="search-icon-pos" size="18"></i>
+                            <input type="text" id="guideSearchInput" class="form-control guide-search-input py-2"
+                                placeholder="Search destination...">
+                        </div>
+                        <!-- Dropdown Filter -->
+                        <select id="categoryFilter" class="form-select rounded-pill shadow-sm"
+                            style="width: auto; padding-left: 20px; padding-right: 40px; cursor: pointer; border: 2px solid #e9ecef;">
+                            <option value="all">All Categories</option>
+                            <option value="nature">Nature & Wildlife</option>
+                            <option value="cultural">Culture & Tradition</option>
+                            <option value="urban">Urban & Eco-City</option>
+                            <option value="adventure">Outdoor Adventure</option>
+                        </select>
                     </div>
                 </div>
             </div>
 
             <div class="row g-4" id="guidesGrid">
-                <!-- Guide Item 1 -->
-                <div class="col-md-4 guide-item reveal" data-category="nature" style="transition-delay: 0.1s;">
-                    <div class="guide-card">
-                        <div class="overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80&w=800"
-                                class="card-img-top" alt="Iceland">
-                        </div>
-                        <div class="card-body p-4">
-                            <span class="badge-eco mb-2">Sustainable Nature</span>
-                            <h5 class="card-title fw-bold">Iceland: Land of Fire & Ice</h5>
-                            <p class="card-text text-muted">Learn how to explore glaciers and geothermal spas
-                                responsibly.</p>
-                            <a href="#"
-                                class="text-success text-decoration-none fw-bold d-inline-flex align-items-center read-guide-btn"
-                                data-guide="iceland">
-                                Read Guide <i data-lucide="arrow-right" class="ms-1" size="16"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Guide Item 2 -->
-                <div class="col-md-4 guide-item reveal" data-category="city" style="transition-delay: 0.2s;">
-                    <div class="guide-card">
-                        <div class="overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&q=80&w=800"
-                                class="card-img-top" alt="Amsterdam">
-                        </div>
-                        <div class="card-body p-4">
-                            <span class="badge-eco mb-2">Eco-Urban</span>
-                            <h5 class="card-title fw-bold">Amsterdam: Cycling Culture</h5>
-                            <p class="card-text text-muted">A zero-emission guide to the world's most bike-friendly
-                                city.</p>
-                            <a href="#"
-                                class="text-success text-decoration-none fw-bold d-inline-flex align-items-center read-guide-btn"
-                                data-guide="amsterdam">
-                                Read Guide <i data-lucide="arrow-right" class="ms-1" size="16"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Guide Item 3 -->
-                <div class="col-md-4 guide-item reveal" data-category="nature" style="transition-delay: 0.3s;">
-                    <div class="guide-card">
-                        <div class="overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1536782376847-5c9d14d97cc0?auto=format&fit=crop&q=80&w=800"
-                                class="card-img-top" alt="Costa Rica">
-                        </div>
-                        <div class="card-body p-4">
-                            <span class="badge-eco mb-2">Wildlife Conservation</span>
-                            <h5 class="card-title fw-bold">Costa Rica: Pura Vida</h5>
-                            <p class="card-text text-muted">The pioneer of ecotourism. Supporting rainforest
-                                preservation.</p>
-                            <a href="#"
-                                class="text-success text-decoration-none fw-bold d-inline-flex align-items-center read-guide-btn"
-                                data-guide="costarica">
-                                Read Guide <i data-lucide="arrow-right" class="ms-1" size="16"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                <!-- Cards will be dynamically injected here -->
+            </div>
+            <!-- No results message -->
+            <div id="noResults" class="text-center py-5 d-none">
+                <i data-lucide="search-x" class="text-muted mb-3" size="48"></i>
+                <h5>No destinations found matching your search.</h5>
             </div>
         </div>
     </section>
@@ -343,43 +301,88 @@
 
     <!-- Auth Section (Login/Register) -->
     <section id="auth" class="page-section">
-        <div class="container">
-            <div class="auth-container reveal">
-                <div class="text-center mb-4">
-                    <div class="d-inline-flex bg-success bg-opacity-10 p-3 rounded-circle mb-3">
-                        <i data-lucide="user-circle" class="text-success" size="32"></i>
-                    </div>
-                    <h2 id="authTitle" class="fw-bold">Welcome Back</h2>
-                    <p class="text-muted" id="authSubtitle">Please enter your details to sign in.</p>
-                </div>
+        <div class="container py-5">
+            <div class="card border-0 shadow-lg overflow-hidden mx-auto reveal"
+                style="max-width: 1000px; border-radius: 2.5rem;">
+                <div class="row g-0">
+                    <!-- Left Side: Visual -->
+                    <div class="col-lg-6 d-none d-lg-flex position-relative text-white p-5 flex-column justify-content-between"
+                        style="background: linear-gradient(to top, rgba(27, 67, 50, 0.95), rgba(27, 67, 50, 0.4)), url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=800&q=80') center/cover;">
+                        <div>
+                            <div class="badge bg-white bg-opacity-25 text-white mb-4 px-3 py-2 rounded-pill text-uppercase tracking-widest"
+                                style="letter-spacing: 2px;">Community First</div>
+                            <h2 class="display-5 fw-bold mb-4">Join the network of <br><span style="color: #95d5b2;">Eco
+                                    Travelers.</span></h2>
+                        </div>
 
-                <form id="authForm">
-                    <div id="registerFields" class="d-none">
-                        <div class="mb-3">
-                            <label class="form-label fw-bold small text-muted">Full Name</label>
-                            <input type="text" class="form-control p-3 bg-light border-0 rounded-3" id="authName"
-                                placeholder="John Doe">
+                        <div class="d-flex flex-column gap-4">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="bg-white bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+                                    style="width: 40px; height: 40px;">
+                                    <i data-lucide="map-pin" class="text-white" size="20"></i>
+                                </div>
+                                <p class="mb-0 text-light">Save and plan your sustainable routes.</p>
+                            </div>
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="bg-white bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+                                    style="width: 40px; height: 40px;">
+                                    <i data-lucide="award" class="text-white" size="20"></i>
+                                </div>
+                                <p class="mb-0 text-light">Earn community badges for green travel.</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-bold small text-muted">Email Address</label>
-                        <input type="email" class="form-control p-3 bg-light border-0 rounded-3" id="authEmail"
-                            placeholder="name@example.com" required>
-                    </div>
-                    <div class="mb-4">
-                        <label class="form-label fw-bold small text-muted">Password</label>
-                        <input type="password" class="form-control p-3 bg-light border-0 rounded-3" id="authPass"
-                            placeholder="••••••••" required>
-                    </div>
 
-                    <button type="submit" class="btn btn-eco w-100 py-3 mt-2" id="authBtn">Sign In</button>
-                </form>
+                    <!-- Right Side: Form -->
+                    <div class="col-lg-6 p-5 p-md-5 d-flex flex-column justify-content-center bg-white"
+                        id="authFormContainer">
+                        <div class="mb-5">
+                            <h2 id="authTitle" class="fw-bold display-6 mb-2 text-dark">Create Account</h2>
+                            <p class="text-muted" id="authSubtitle">Become a part of the sustainable travel movement.
+                            </p>
+                        </div>
 
-                <div class="text-center mt-4">
-                    <p class="text-muted small" id="authToggleText">
-                        Don't have an account? <a href="#" class="text-success fw-bold text-decoration-none"
-                            id="toggleAuth">Register</a>
-                    </p>
+                        <form id="authForm">
+                            <div id="registerFields">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold small text-muted ms-1">Full Name</label>
+                                    <input type="text" class="form-control p-3 bg-light border-0 rounded-4"
+                                        id="authName" placeholder="e.g. John Doe">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold small text-muted ms-1">Email Address</label>
+                                <input type="email" class="form-control p-3 bg-light border-0 rounded-4" id="authEmail"
+                                    placeholder="name@example.com" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label fw-bold small text-muted ms-1">Password</label>
+                                <input type="password" class="form-control p-3 bg-light border-0 rounded-4"
+                                    id="authPass" placeholder="••••••••" required>
+                            </div>
+
+                            <div class="form-check mb-4 d-flex align-items-center gap-2" id="termsCheckGroup">
+                                <input class="form-check-input mt-0 shadow-none border-secondary" type="checkbox"
+                                    id="termsCheck" required style="width: 18px; height: 18px; cursor: pointer;">
+                                <label class="form-check-label text-muted small" for="termsCheck"
+                                    style="cursor: pointer;">
+                                    I agree to the <a href="#" class="text-success fw-bold text-decoration-none">Terms
+                                        of Service</a> and <a href="#"
+                                        class="text-success fw-bold text-decoration-none">Privacy Policy</a>.
+                                </label>
+                            </div>
+
+                            <button type="submit" class="btn btn-eco w-100 py-3 rounded-4 fs-5 mt-2 shadow-sm"
+                                id="authBtn">Create My Account</button>
+                        </form>
+
+                        <div class="mt-5 pt-4 border-top text-center">
+                            <p class="text-muted mb-0" id="authToggleText">
+                                Already have an account? <a href="#" class="text-success fw-bold text-decoration-none"
+                                    id="toggleAuth">Sign In</a>
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -437,11 +440,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script src="Travel_agency.js">
-
-    </script>
-
-    <div class="custom-cursor"></div>
+    <script src="Travel_agency.js"></script>
 </body>
 
 </html>
