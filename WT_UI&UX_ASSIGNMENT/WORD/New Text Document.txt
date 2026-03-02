@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoJourney | Sustainable Travel Guides</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet">
+    <!-- Lucide Icons (via CDN) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary-green: #2d6a4f;
+            --light-green: #95d5b2;
+            --accent-earth: #bc6c25;
+            --bg-cream: #f8f9fa;
+            --text-dark: #1b4332;
+        }
+
+        body {
+            scroll-behavior: smooth;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-cream);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        h1, h2, h3, .brand-font {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* ============================= */
+        /* ✨ Custom Cursor */
+        /* ============================= */
+        .custom-cursor {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #2d6a4f;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background-color 0.2s, backdrop-filter 0.2s;
+            z-index: 10000;
+        }
+
+        .cursor-grow {
+            width: 45px !important;
+            height: 45px !important;
+            background: rgba(45, 106, 79, 0.15);
+            backdrop-filter: blur(3px);
+            border-color: transparent;
+        }
+
+        /* ============================= */
+        /* 🌊 Smooth Scrollbar */
+        /* ============================= */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #e9ecef; }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #95d5b2, #2d6a4f);
+            border-radius: 50px;
+            transition: 0.3s ease;
+        }
+        ::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #2d6a4f, #1b4332); }
+        html { scrollbar-width: thin; scrollbar-color: #2d6a4f #e9ecef; }
+
+        /* ============================= */
+        /* 🚀 Reveal Animations */
+        /* ============================= */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        @keyframes heroFadeUp {
+            0% { opacity: 0; transform: translateY(40px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .navbar.shadow-sm {
+            background: rgba(255, 255, 255, 0.98);
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+        .nav-link {
+            font-weight: 600;
+            color: var(--text-dark) !important;
+            margin: 0 10px;
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary-green);
+            transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .nav-link:hover::after { width: 100%; }
+        
+        .route-badge {
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 10px;
+            vertical-align: top;
+            margin-left: 2px;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 80vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&q=80&w=2000');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            margin-top: 56px;
+        }
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            animation: heroFadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+        }
+        .hero p {
+            opacity: 0;
+            animation: heroFadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+        }
+        .hero .hero-buttons {
+            opacity: 0;
+            animation: heroFadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+        }
+
+        /* Cards */
+        .guide-card {
+            border: none;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            background: white;
+            height: 100%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+        }
+        .guide-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12);
+        }
+        .card-img-top {
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .guide-card:hover .card-img-top { transform: scale(1.05); }
+
+        .badge-eco {
+            background-color: var(--primary-green);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            display: inline-block;
+        }
+
+        /* Sections */
+        .page-section {
+            padding: 80px 0;
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .page-section.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Guide Detail Specifics */
+        .detail-hero {
+            height: 50vh;
+            border-radius: 30px;
+            background-size: cover;
+            background-position: center;
+            margin-bottom: -100px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        .detail-content-box {
+            background: white;
+            border-radius: 30px;
+            padding: 60px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            position: relative;
+            z-index: 2;
+        }
+        .tip-card {
+            background: #f1f8f4;
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 4px solid var(--primary-green);
+        }
+
+        /* My Route Timeline */
+        .timeline-container {
+            position: relative;
+            padding-left: 50px;
+        }
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--light-green);
+            opacity: 0.4;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+        }
+        .timeline-dot {
+            position: absolute;
+            left: -38px;
+            top: 5px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--primary-green);
+            border: 4px solid white;
+            box-shadow: 0 0 0 2px var(--light-green);
+            z-index: 1;
+        }
+        .route-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: transform 0.3s ease;
+        }
+        .route-card:hover {
+            transform: translateX(10px);
+        }
+        .route-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 15px;
+            object-fit: cover;
+        }
+
+        /* Auth UI */
+        .auth-container {
+            max-width: 450px;
+            margin: 50px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .btn-eco {
+            background-color: var(--primary-green);
+            color: white;
+            border-radius: 12px;
+            padding: 12px 30px;
+            font-weight: 600;
+            border: none;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-eco:hover {
+            background-color: var(--text-dark);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(45, 106, 79, 0.2);
+        }
+
+        /* Feedback styling */
+        .feedback-star {
+            color: #ffc107;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .feedback-star:hover { transform: scale(1.2); }
+
+        footer {
+            background-color: var(--text-dark);
+            color: white;
+            padding: 60px 0 20px;
+        }
+
+        .custom-alert {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 9999;
+            display: none;
+        }
+        .icon-box { transition: all 0.4s ease; }
+        .icon-box:hover i { transform: scale(1.15) rotate(5deg); }
+        .icon-box i { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    </style>
+</head>
+
+<body>
+
+    <!-- Alert System -->
+    <div id="statusAlert" class="alert alert-success custom-alert shadow" role="alert">
+        Action Successful!
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand brand-font fs-3" href="#" onclick="showSection('home')">
+                <i data-lucide="leaf" class="d-inline-block align-text-top me-2 text-success"></i>EcoJourney
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('home')">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('guides')">Guides</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showSection('my-route')">
+                            My Route <span class="badge bg-success route-badge d-none" id="routeCounter">0</span>
+                        </a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('about')">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('feedback')">Feedback</a></li>
+                    <li class="nav-item ms-lg-3" id="authLinkContainer">
+                        <button class="btn btn-eco" onclick="showSection('auth')">Login / Join</button>
+                    </li>
+                    <li class="nav-item dropdown d-none" id="userProfileContainer">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown"
+                            role="button" data-bs-toggle="dropdown">
+                            <i data-lucide="user" class="me-2"></i> <span id="userNameDisplay">Explorer</span>
+                        </a>
+                        <ul class="dropdown-menu border-0 shadow">
+                            <li><a class="dropdown-item" href="#" onclick="logout()">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home" class="page-section active">
+        <div class="hero">
+            <div class="container">
+                <h1 class="display-3 fw-bold">Travel Responsibly.<br>Live Sustainably.</h1>
+                <p class="lead mb-5 fs-4">Join our community of conscious travelers exploring the world while preserving
+                    it.</p>
+                <div class="d-flex justify-content-center gap-3 hero-buttons">
+                    <button class="btn btn-eco btn-lg px-5" onclick="showSection('guides')">Explore Guides</button>
+                    <button class="btn btn-outline-light btn-lg px-5 border-2" onclick="showSection('about')">Our Mission</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="container py-5">
+            <div class="row text-center mb-5">
+                <div class="col-md-4 mb-4 reveal" style="transition-delay: 0.1s;">
+                    <div class="p-4 bg-white rounded-4 shadow-sm h-100 icon-box">
+                        <i data-lucide="map-pin" class="text-success mb-3" size="48"></i>
+                        <h4>Local Impact</h4>
+                        <p class="text-muted">We prioritize local businesses and authentic cultural experiences.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4 reveal" style="transition-delay: 0.2s;">
+                    <div class="p-4 bg-white rounded-4 shadow-sm h-100 icon-box">
+                        <i data-lucide="wind" class="text-success mb-3" size="48"></i>
+                        <h4>Zero Waste</h4>
+                        <p class="text-muted">Practical tips to reduce your carbon footprint while on the move.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4 reveal" style="transition-delay: 0.3s;">
+                    <div class="p-4 bg-white rounded-4 shadow-sm h-100 icon-box">
+                        <i data-lucide="heart" class="text-success mb-3" size="48"></i>
+                        <h4>Ethical Choices</h4>
+                        <p class="text-muted">Wildlife-friendly and socially responsible tourism frameworks.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Guides Section -->
+    <section id="guides" class="page-section">
+        <div class="container">
+            <div class="row pt-5 mb-5 align-items-center reveal">
+                <div class="col-md-6">
+                    <h2 class="display-5 fw-bold">Eco-Friendly Guides</h2>
+                    <p class="text-muted">Hand-picked destinations and sustainable travel blueprints.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="btn-group shadow-sm rounded-3 overflow-hidden">
+                        <button class="btn btn-outline-success active" data-filter="all">All</button>
+                        <button class="btn btn-outline-success" data-filter="nature">Nature</button>
+                        <button class="btn btn-outline-success" data-filter="city">City</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-4" id="guidesGrid">
+                <!-- Guide Item 1 -->
+                <div class="col-md-4 guide-item reveal" data-category="nature" style="transition-delay: 0.1s;">
+                    <div class="guide-card">
+                        <div class="overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80&w=800"
+                                class="card-img-top" alt="Iceland">
+                        </div>
+                        <div class="card-body p-4">
+                            <span class="badge-eco mb-2">Sustainable Nature</span>
+                            <h5 class="card-title fw-bold">Iceland: Land of Fire & Ice</h5>
+                            <p class="card-text text-muted">Learn how to explore glaciers and geothermal spas responsibly.</p>
+                            <a href="#" class="text-success text-decoration-none fw-bold d-inline-flex align-items-center read-guide-btn" data-guide="iceland">
+                                Read Guide <i data-lucide="arrow-right" class="ms-1" size="16"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Guide Item 2 -->
+                <div class="col-md-4 guide-item reveal" data-category="city" style="transition-delay: 0.2s;">
+                    <div class="guide-card">
+                        <div class="overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&q=80&w=800"
+                                class="card-img-top" alt="Amsterdam">
+                        </div>
+                        <div class="card-body p-4">
+                            <span class="badge-eco mb-2">Eco-Urban</span>
+                            <h5 class="card-title fw-bold">Amsterdam: Cycling Culture</h5>
+                            <p class="card-text text-muted">A zero-emission guide to the world's most bike-friendly city.</p>
+                            <a href="#" class="text-success text-decoration-none fw-bold d-inline-flex align-items-center read-guide-btn" data-guide="amsterdam">
+                                Read Guide <i data-lucide="arrow-right" class="ms-1" size="16"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Guide Item 3 -->
+                <div class="col-md-4 guide-item reveal" data-category="nature" style="transition-delay: 0.3s;">
+                    <div class="guide-card">
+                        <div class="overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1536782376847-5c9d14d97cc0?auto=format&fit=crop&q=80&w=800"
+                                class="card-img-top" alt="Costa Rica">
+                        </div>
+                        <div class="card-body p-4">
+                            <span class="badge-eco mb-2">Wildlife Conservation</span>
+                            <h5 class="card-title fw-bold">Costa Rica: Pura Vida</h5>
+                            <p class="card-text text-muted">The pioneer of ecotourism. Supporting rainforest preservation.</p>
+                            <a href="#" class="text-success text-decoration-none fw-bold d-inline-flex align-items-center read-guide-btn" data-guide="costarica">
+                                Read Guide <i data-lucide="arrow-right" class="ms-1" size="16"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Guide Detail Section (Dynamic) -->
+    <section id="guide-detail" class="page-section">
+        <div class="container">
+            <button class="btn btn-outline-success mb-4 rounded-pill px-4" onclick="showSection('guides')">
+                <i data-lucide="arrow-left" class="me-2" size="18"></i> Back to Guides
+            </button>
+            <div id="detail-hero" class="detail-hero reveal"></div>
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="detail-content-box reveal" style="transition-delay: 0.2s;">
+                        <div class="d-flex flex-column flex-md-row justify-content-md-between align-items-start mb-4 gap-3">
+                            <div>
+                                <span id="detail-badge" class="badge-eco mb-2">Category</span>
+                                <h1 id="detail-title" class="display-4 fw-bold mb-0">Destination Name</h1>
+                            </div>
+                            <button id="addToRouteBtn" class="btn btn-eco btn-lg rounded-pill shadow-sm d-flex align-items-center">
+                                <i data-lucide="plus" class="me-2"></i> Add to My Route
+                            </button>
+                        </div>
+                        
+                        <p id="detail-desc" class="lead text-muted mb-5">Loading information...</p>
+                        
+                        <div class="row g-4 mb-5">
+                            <div class="col-md-6">
+                                <h4 class="fw-bold mb-3 d-flex align-items-center">
+                                    <i data-lucide="leaf" class="text-success me-2"></i> Sustainability Focus
+                                </h4>
+                                <div id="detail-eco-tips" class="space-y-3">
+                                    <!-- Dynamic tips -->
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h4 class="fw-bold mb-3 d-flex align-items-center">
+                                    <i data-lucide="map" class="text-success me-2"></i> Local Experiences
+                                </h4>
+                                <ul id="detail-local-spots" class="list-unstyled">
+                                    <!-- Dynamic spots -->
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="tip-card mb-0">
+                            <h5 class="fw-bold mb-2">Eco-Traveler Tip:</h5>
+                            <p id="detail-pro-tip" class="mb-0 text-muted">Always carry a reusable water bottle and respect local wildlife boundaries.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- My Route Section -->
+    <section id="my-route" class="page-section">
+        <div class="container pt-5">
+            <div class="text-center mb-5 reveal">
+                <h2 class="display-5 fw-bold">My Travel Route</h2>
+                <p class="text-muted">Your curated list of sustainable destinations.</p>
+            </div>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div id="routeEmptyState" class="text-center py-5 reveal">
+                        <div class="bg-light p-4 rounded-circle d-inline-block mb-4">
+                            <i data-lucide="map-pin" class="text-muted" size="48"></i>
+                        </div>
+                        <h4>Your route is empty</h4>
+                        <p class="text-muted">Explore our eco-friendly guides to start planning your journey.</p>
+                        <button class="btn btn-eco mt-3" onclick="showSection('guides')">Discover Destinations</button>
+                    </div>
+                    
+                    <div id="routeTimeline" class="timeline-container d-none">
+                        <!-- Dynamic Route Items -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="page-section">
+        <div class="container">
+            <div class="row align-items-center min-vh-75 pt-5">
+                <div class="col-lg-6 mb-4 reveal">
+                    <div class="position-relative">
+                        <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=1200"
+                            class="img-fluid rounded-5 shadow-lg" alt="Eco Team">
+                        <div class="position-absolute bottom-0 end-0 bg-white p-4 rounded-4 shadow-lg mb-4 me-4 reveal"
+                            style="transition-delay: 0.4s; max-width: 200px;">
+                            <h3 class="fw-bold text-success mb-0">10k+</h3>
+                            <p class="text-muted mb-0 small">Eco Travelers</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 ps-lg-5 reveal" style="transition-delay: 0.2s;">
+                    <h2 class="display-4 fw-bold mb-4">Our Green Mission</h2>
+                    <p class="lead text-muted mb-4">We believe that travel is a privilege that comes with the
+                        responsibility to protect our host planet.</p>
+                    <p class="mb-4">EcoJourney was founded by a group of environmentalists and travel enthusiasts who
+                        realized that the tourism industry needed a massive shift toward sustainability. We vet every
+                        guide, every partner, and every tip to ensure they align with the 17 UN Sustainable Development
+                        Goals.</p>
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <div class="d-flex align-items-center p-3 bg-white rounded-3 shadow-sm icon-box">
+                                <i data-lucide="check-circle" class="text-success me-3"></i>
+                                <span class="fw-bold">100% Verified Tips</span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="d-flex align-items-center p-3 bg-white rounded-3 shadow-sm icon-box">
+                                <i data-lucide="users" class="text-success me-3"></i>
+                                <span class="fw-bold">Community Funded</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feedback Section -->
+    <section id="feedback" class="page-section">
+        <div class="container">
+            <div class="max-width-700 mx-auto pt-5">
+                <div class="text-center mb-5 reveal">
+                    <h2 class="display-5 fw-bold">Share Your Experience</h2>
+                    <p class="text-muted">How are we doing? Your feedback helps us build better guides.</p>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-8 bg-white p-5 rounded-4 shadow-sm reveal" style="transition-delay: 0.2s;">
+                        <form id="feedbackForm">
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Rate your experience</label>
+                                <div class="fs-2 mb-3 d-flex gap-2">
+                                    <i data-lucide="star" class="feedback-star" data-rating="1"></i>
+                                    <i data-lucide="star" class="feedback-star" data-rating="2"></i>
+                                    <i data-lucide="star" class="feedback-star" data-rating="3"></i>
+                                    <i data-lucide="star" class="feedback-star" data-rating="4"></i>
+                                    <i data-lucide="star" class="feedback-star" data-rating="5"></i>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label fw-bold">Tell us more</label>
+                                <textarea class="form-control bg-light border-0 p-3 rounded-3" rows="4"
+                                    placeholder="What did you love or what can we improve?" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-eco w-100 py-3">Submit Feedback</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Auth Section (Login/Register) -->
+    <section id="auth" class="page-section">
+        <div class="container">
+            <div class="auth-container reveal">
+                <div class="text-center mb-4">
+                    <div class="d-inline-flex bg-success bg-opacity-10 p-3 rounded-circle mb-3">
+                        <i data-lucide="user-circle" class="text-success" size="32"></i>
+                    </div>
+                    <h2 id="authTitle" class="fw-bold">Welcome Back</h2>
+                    <p class="text-muted" id="authSubtitle">Please enter your details to sign in.</p>
+                </div>
+
+                <form id="authForm">
+                    <div id="registerFields" class="d-none">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold small text-muted">Full Name</label>
+                            <input type="text" class="form-control p-3 bg-light border-0 rounded-3" id="authName"
+                                placeholder="John Doe">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small text-muted">Email Address</label>
+                        <input type="email" class="form-control p-3 bg-light border-0 rounded-3" id="authEmail"
+                            placeholder="name@example.com" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label fw-bold small text-muted">Password</label>
+                        <input type="password" class="form-control p-3 bg-light border-0 rounded-3" id="authPass"
+                            placeholder="••••••••" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-eco w-100 py-3 mt-2" id="authBtn">Sign In</button>
+                </form>
+
+                <div class="text-center mt-4">
+                    <p class="text-muted small" id="authToggleText">
+                        Don't have an account? <a href="#" class="text-success fw-bold text-decoration-none"
+                            id="toggleAuth">Register</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 reveal" style="transition-delay: 0.1s;">
+                    <h3 class="brand-font mb-4"><i data-lucide="leaf"
+                            class="d-inline-block align-text-top me-2 text-success" size="28"></i>EcoJourney</h3>
+                    <p class="text-secondary">Empowering travelers to make better choices for the planet and its people.
+                    </p>
+                </div>
+                <div class="col-md-2 mb-4 reveal" style="transition-delay: 0.2s;">
+                    <h5 class="fw-bold mb-3">Links</h5>
+                    <ul class="list-unstyled text-secondary">
+                        <li class="mb-2"><a href="#" class="text-reset text-decoration-none" style="transition: 0.2s;">Privacy Policy</a></li>
+                        <li class="mb-2"><a href="#" class="text-reset text-decoration-none" style="transition: 0.2s;">Terms of Service</a></li>
+                        <li class="mb-2"><a href="#" class="text-reset text-decoration-none" style="transition: 0.2s;">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4 reveal" style="transition-delay: 0.3s;">
+                    <h5 class="fw-bold mb-3">Community</h5>
+                    <ul class="list-unstyled text-secondary">
+                        <li class="mb-2"><a href="#" class="text-reset text-decoration-none" style="transition: 0.2s;">Volunteer</a></li>
+                        <li class="mb-2"><a href="#" class="text-reset text-decoration-none" style="transition: 0.2s;">Partner with us</a></li>
+                        <li class="mb-2"><a href="#" class="text-reset text-decoration-none" style="transition: 0.2s;">Donate</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4 reveal" style="transition-delay: 0.4s;">
+                    <h5 class="fw-bold mb-3">Newsletter</h5>
+                    <div class="input-group">
+                        <input type="email" class="form-control border-0 bg-secondary text-white placeholder-light"
+                            placeholder="Email Address">
+                        <button class="btn btn-success" type="button">Join</button>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-4 border-secondary opacity-25">
+            <div class="text-center text-secondary small pt-3 pb-2">
+                © 2024 EcoJourney Global. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Guide Data
+        const guideData = {
+            iceland: {
+                id: 'iceland',
+                title: "Iceland: Land of Fire & Ice",
+                badge: "Sustainable Nature",
+                desc: "Explore Iceland's pristine glaciers, dramatic waterfalls, and geothermal wonders while minimizing your footprint on its fragile ecosystem.",
+                heroImg: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80&w=2000",
+                ecoTips: [
+                    "Stick to marked trails to prevent soil erosion in mossy fields.",
+                    "Use geothermal heating: almost all Icelandic homes use 100% renewable energy.",
+                    "Drink tap water: Iceland has some of the cleanest water in the world."
+                ],
+                localSpots: [
+                    "Hveragerði Hot Springs: A community-run natural spa.",
+                    "Skúli Craft Bar: Supports local Icelandic micro-breweries.",
+                    "Reykjavik Roasters: Fair-trade coffee and community hub."
+                ],
+                proTip: "Don't buy bottled water. Bring a reusable bottle and fill it from any tap; it's exactly the same water as the expensive bottles."
+            },
+            amsterdam: {
+                id: 'amsterdam',
+                title: "Amsterdam: Cycling Culture",
+                badge: "Eco-Urban",
+                desc: "Discover the charming canals and historic streets of Amsterdam through its world-famous zero-emission transport network.",
+                heroImg: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&q=80&w=2000",
+                ecoTips: [
+                    "Rent a bike from local community-owned shops.",
+                    "Shop at the Albert Cuyp Market for locally sourced produce.",
+                    "Participate in a canal-plastic fishing tour to clean the waterways."
+                ],
+                localSpots: [
+                    "De Ceuvel: A sustainable urban oasis built on polluted soil.",
+                    "Mediamatic: An arts centre focused on biotechnology and fungi.",
+                    "PLANT: A zero-waste vegan restaurant in the Plantage district."
+                ],
+                proTip: "Get an OV-chipkaart to access the extensive electric tram and bus network easily, reducing the need for taxis."
+            },
+            costarica: {
+                id: 'costarica',
+                title: "Costa Rica: Pura Vida",
+                badge: "Wildlife Conservation",
+                desc: "Immerse yourself in one of the most biodiverse places on Earth and support reforestation and wildlife protection efforts.",
+                heroImg: "https://images.unsplash.com/photo-1536782376847-5c9d14d97cc0?auto=format&fit=crop&q=80&w=2000",
+                ecoTips: [
+                    "Choose Blue Flag certified beaches and eco-lodges.",
+                    "Never touch or feed wildlife; observe from a distance.",
+                    "Support local artisans in Sarchí to boost the rural economy."
+                ],
+                localSpots: [
+                    "Monteverde Cloud Forest: A community-managed private reserve.",
+                    "Cahuita National Park: Focus on marine life conservation.",
+                    "La Fortuna Farmers Market: Direct support for local farmers."
+                ],
+                proTip: "Pack reef-safe sunscreen. The coral reefs in Costa Rica are protected and chemical-based sunscreens are harmful."
+            }
+        };
+
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // State Management
+        let isLogin = true;
+        let currentUser = null;
+        let currentRating = 0;
+        let myRoute = [];
+        let activeGuide = null;
+
+        // Intersection Observer for Scroll Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        function initScrollAnimations() {
+            document.querySelectorAll('.reveal').forEach((el) => {
+                el.classList.remove('active');
+                observer.observe(el);
+            });
+            setTimeout(() => {
+                document.querySelectorAll('.reveal').forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    if (rect.top < window.innerHeight && rect.bottom >= 0) {
+                        el.classList.add('active');
+                    }
+                });
+            }, 100);
+        }
+
+        // Navigation Function
+        function showSection(sectionId) {
+            $('.page-section').removeClass('active');
+            setTimeout(() => {
+                $(`#${sectionId}`).addClass('active');
+                initScrollAnimations();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+                if(sectionId === 'my-route') renderRoute();
+            }, 50);
+            if ($('.navbar-collapse').hasClass('show')) {
+                $('.navbar-toggler').click();
+            }
+        }
+
+        // Custom Alert Helper
+        function showAlert(msg, type = 'success') {
+            const alert = $('#statusAlert');
+            alert.text(msg).removeClass('alert-success alert-danger').addClass(`alert-${type}`).fadeIn();
+            setTimeout(() => alert.fadeOut(), 3000);
+        }
+
+        // Route Management Logic
+        function updateRouteUI() {
+            const count = myRoute.length;
+            const counter = $('#routeCounter');
+            if(count > 0) {
+                counter.removeClass('d-none').text(count);
+            } else {
+                counter.addClass('d-none');
+            }
+        }
+
+        function renderRoute() {
+            const timeline = $('#routeTimeline');
+            const emptyState = $('#routeEmptyState');
+            
+            if(myRoute.length === 0) {
+                timeline.addClass('d-none');
+                emptyState.removeClass('d-none');
+                return;
+            }
+            
+            emptyState.addClass('d-none');
+            timeline.removeClass('d-none').empty();
+            
+            myRoute.forEach((guideId, index) => {
+                const data = guideData[guideId];
+                const item = `
+                    <div class="timeline-item reveal" style="transition-delay: ${index * 0.1}s">
+                        <div class="timeline-dot"></div>
+                        <div class="route-card">
+                            <img src="${data.heroImg}" class="route-img" alt="${data.title}">
+                            <div class="flex-grow-1">
+                                <span class="badge-eco mb-1">${data.badge}</span>
+                                <h5 class="fw-bold text-dark mb-1">${data.title}</h5>
+                                <p class="small text-muted mb-0">Sustainable travel plan added</p>
+                            </div>
+                            <button class="btn btn-link text-danger remove-route-btn p-2" data-id="${guideId}">
+                                <i data-lucide="trash-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                timeline.append(item);
+            });
+            
+            lucide.createIcons();
+            initScrollAnimations();
+            
+            $('.remove-route-btn').on('click', function() {
+                const id = $(this).data('id');
+                myRoute = myRoute.filter(i => i !== id);
+                updateRouteUI();
+                renderRoute();
+                showAlert("Destination removed from route", "info");
+            });
+        }
+
+        $(document).ready(function () {
+            initScrollAnimations();
+
+            // Read Guide Logic
+            $('.read-guide-btn').on('click', function(e) {
+                e.preventDefault();
+                const guideKey = $(this).data('guide');
+                const data = guideData[guideKey];
+                
+                if(data) {
+                    activeGuide = data;
+                    // Populate detail section
+                    $('#detail-hero').css('background-image', `url(${data.heroImg})`);
+                    $('#detail-title').text(data.title);
+                    $('#detail-badge').text(data.badge);
+                    $('#detail-desc').text(data.desc);
+                    $('#detail-pro-tip').text(data.proTip);
+                    
+                    // Update Button State
+                    const isAdded = myRoute.includes(data.id);
+                    $('#addToRouteBtn').html(isAdded ? '<i data-lucide="check" class="me-2"></i> In Your Route' : '<i data-lucide="plus" class="me-2"></i> Add to My Route');
+                    $('#addToRouteBtn').prop('disabled', isAdded);
+
+                    // Clear and populate lists
+                    $('#detail-eco-tips').empty();
+                    data.ecoTips.forEach(tip => {
+                        $('#detail-eco-tips').append(`<div class="p-3 bg-light rounded-3 mb-2"><i data-lucide="check" class="text-success me-2" size="18"></i>${tip}</div>`);
+                    });
+                    
+                    $('#detail-local-spots').empty();
+                    data.localSpots.forEach(spot => {
+                        $('#detail-local-spots').append(`<li class="mb-2 d-flex align-items-center"><i data-lucide="map-pin" class="text-success me-2" size="18"></i>${spot}</li>`);
+                    });
+                    
+                    lucide.createIcons(); // Refresh icons for new content
+                    showSection('guide-detail');
+                }
+            });
+
+            // Add to Route Logic
+            $('#addToRouteBtn').on('click', function() {
+                if(!activeGuide) return;
+                
+                if(!myRoute.includes(activeGuide.id)) {
+                    myRoute.push(activeGuide.id);
+                    updateRouteUI();
+                    $(this).html('<i data-lucide="check" class="me-2"></i> Added!').addClass('btn-success').prop('disabled', true);
+                    showAlert(`Great! ${activeGuide.title} added to your route.`);
+                    lucide.createIcons();
+                }
+            });
+
+            // Guide Filtering Logic
+            $('[data-filter]').on('click', function () {
+                const filter = $(this).data('filter');
+                $('[data-filter]').removeClass('active');
+                $(this).addClass('active');
+
+                if (filter === 'all') {
+                    $('.guide-item').hide().fadeIn(500);
+                } else {
+                    $('.guide-item').hide();
+                    $(`.guide-item[data-category="${filter}"]`).fadeIn(500);
+                }
+            });
+
+            // Auth Toggle Logic
+            $('#toggleAuth').on('click', function (e) {
+                e.preventDefault();
+                isLogin = !isLogin;
+                $('.auth-container').css('opacity', '0.5');
+                setTimeout(() => {
+                    if (isLogin) {
+                        $('#authTitle').text('Welcome Back');
+                        $('#authSubtitle').text('Please enter your details to sign in.');
+                        $('#registerFields').addClass('d-none');
+                        $('#authBtn').text('Sign In');
+                        $('#authToggleText').html(`Don't have an account? <a href="#" class="text-success fw-bold text-decoration-none" id="toggleAuth">Register</a>`);
+                    } else {
+                        $('#authTitle').text('Join EcoJourney');
+                        $('#authSubtitle').text('Start your sustainable travel journey today.');
+                        $('#registerFields').removeClass('d-none');
+                        $('#authBtn').text('Create Account');
+                        $('#authToggleText').html(`Already have an account? <a href="#" class="text-success fw-bold text-decoration-none" id="toggleAuth">Login</a>`);
+                    }
+                    $('.auth-container').css('opacity', '1');
+                    $('#toggleAuth').on('click', function (e) { e.preventDefault(); $('#toggleAuth').trigger('click'); });
+                }, 150);
+            });
+
+            // Handle Login/Register Simulation
+            $('#authForm').on('submit', function (e) {
+                e.preventDefault();
+                const name = $('#authName').val() || 'Eco Traveler';
+                currentUser = { name: name };
+                $('#authLinkContainer').addClass('d-none');
+                $('#userProfileContainer').removeClass('d-none');
+                $('#userNameDisplay').text(name);
+                showAlert(isLogin ? "Successfully Logged In!" : "Account Created Successfully!");
+                showSection('home');
+            });
+
+            // Star Rating Logic
+            $('.feedback-star').on('click', function () {
+                currentRating = $(this).data('rating');
+                $('.feedback-star').each(function (index) {
+                    if (index < currentRating) {
+                        $(this).attr('fill', '#ffc107').addClass('text-warning');
+                    } else {
+                        $(this).attr('fill', 'none').removeClass('text-warning');
+                    }
+                });
+            });
+
+            // Feedback Submission
+            $('#feedbackForm').on('submit', function (e) {
+                e.preventDefault();
+                if (currentRating === 0) {
+                    showAlert("Please select a star rating", "danger");
+                    return;
+                }
+                showAlert("Thank you for your valuable feedback!");
+                $(this).trigger('reset');
+                $('.feedback-star').attr('fill', 'none').removeClass('text-warning');
+                currentRating = 0;
+            });
+
+            // Navbar shadow on scroll
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 50) {
+                    $('.navbar').addClass('shadow-sm');
+                } else {
+                    $('.navbar').removeClass('shadow-sm');
+                }
+            });
+
+            // Cursor movement and hover effects
+            const cursor = document.querySelector('.custom-cursor');
+            document.addEventListener('mousemove', function (e) {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+            document.addEventListener('mouseover', function (e) {
+                if (e.target.closest('a, button, .guide-card, .nav-link, input, textarea, .feedback-star')) {
+                    cursor.classList.add('cursor-grow');
+                }
+            });
+            document.addEventListener('mouseout', function (e) {
+                if (e.target.closest('a, button, .guide-card, .nav-link, input, textarea, .feedback-star')) {
+                    cursor.classList.remove('cursor-grow');
+                }
+            });
+        });
+
+        function logout() {
+            currentUser = null;
+            $('#authLinkContainer').removeClass('d-none');
+            $('#userProfileContainer').addClass('d-none');
+            showAlert("Logged Out Successfully");
+            showSection('home');
+        }
+
+        // Smooth Scroll Effect for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target && this.getAttribute('href') !== '#') {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+
+    <div class="custom-cursor"></div>
+</body>
+
+</html>
