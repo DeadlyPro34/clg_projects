@@ -1,165 +1,252 @@
+// Global variables for charts
+let salesChartInstance = null;
+let detailedChartInstance = null;
+
+// Use the same storage key as Explore Page
+const STORAGE_KEY_COURSES = 'bokify_courses_v3';
+const STORAGE_KEY_ORDERS = 'bokify_orders';
+
 document.addEventListener('DOMContentLoaded', () => {
     loadAdminData();
 });
 
+// --- Sidebar Toggle Logic ---
+function toggleSidebar() {
+    if (window.innerWidth <= 768) {
+        document.body.classList.toggle('sidebar-mobile-open');
+    } else {
+        document.body.classList.toggle('sidebar-collapsed');
+    }
+
+    // Resize charts if they exist so they fit the new layout width
+    setTimeout(() => {
+        if (salesChartInstance) salesChartInstance.resize();
+        if (detailedChartInstance) detailedChartInstance.resize();
+    }, 300);
+}
+
 function loadAdminData() {
-    // 1. Fetch from LocalStorage
-    const courses = JSON.parse(localStorage.getItem('bokify_courses')) || [];
-    const orders = JSON.parse(localStorage.getItem('bokify_orders')) || [];
+    const courses = JSON.parse(localStorage.getItem(STORAGE_KEY_COURSES)) || [];
+    const orders = JSON.parse(localStorage.getItem(STORAGE_KEY_ORDERS)) || [];
 
-    // 2. Load Courses to Table
-    const coursesTables = document.querySelectorAll('table');
-    const coursesTbody = coursesTables[1]?.querySelector('tbody'); // Assuming the second table is courses
+    let totalRevenue = 0;
+    orders.forEach(o => totalRevenue += parseInt(o.amount));
 
+    // Generate unique student count based on names
+    const uniqueStudents = [...new Set(orders.map(o => o.studentName))].length;
+
+    // 1. Update Top Stats
+    document.getElementById('statTotalStudents').innerText = uniqueStudents;
+    document.getElementById('statActiveCourses').innerText = courses.length;
+    document.getElementById('statTotalRevenue').innerText = '₹ ' + totalRevenue.toLocaleString();
+    document.getElementById('statTotalSales').innerText = orders.length;
+
+    // Analytics Stats
+    document.getElementById('analyticsRevenue').innerText = '₹ ' + totalRevenue.toLocaleString();
+    const avgVal = orders.length > 0 ? Math.round(totalRevenue / orders.length) : 0;
+    document.getElementById('analyticsAvgOrder').innerText = '₹ ' + avgVal.toLocaleString();
+
+    // 2. Load Courses Table
+    const coursesTbody = document.querySelector('#coursesTable tbody');
     if (coursesTbody) {
         coursesTbody.innerHTML = '';
         courses.forEach((c, index) => {
             coursesTbody.innerHTML += `
-            <tr>
-                <td style="display:flex; align-items:center; gap:10px;">
-                    <img src="${c.img}" class="course-thumb" style="width: 50px; height: 50px; border-radius: 6px; object-fit: cover; background: #eee;" onerror="this.src='https://via.placeholder.com/50'" />
-                    ${c.title}
-                </td>
-                <td style="text-transform: capitalize;">${c.category}</td>
-                <td>₹ ${c.price.toLocaleString()}</td>
-                <td>0</td>
-                <td>
-                    <i class="fas fa-trash action-icon delete-icon" style="color:var(--danger-color); cursor:pointer;" onclick="deleteCourse(${index})"></i>
-                </td>
-            </tr>`;
+                    <tr>
+                        <td style="display:flex; align-items:center; gap:10px;">
+                            <img src="${c.img}" class="course-thumb" onerror="this.src='https://via.placeholder.com/50'" />
+                            <div>
+                                <strong>${c.title}</strong>
+                                <div style="font-size:12px; color:#888;">by ${c.author}</div>
+                            </div>
+                        </td>
+                        <td style="text-transform: capitalize;">${c.category}</td>
+                        <td style="text-transform: capitalize;">${c.level || 'Beginner'}</td>
+                        <td>₹ ${c.price.toLocaleString()}</td>
+                        <td>
+                            <i class="fas fa-trash action-icon delete-icon" style="color:var(--danger-color); cursor:pointer;" onclick="deleteCourse(${index})" title="Delete Course"></i>
+                        </td>
+                    </tr>`;
         });
     }
 
-    // 3. Load Recent Enrollments (Orders)
-    const ordersTbody = coursesTables[0]?.querySelector('tbody'); // Assuming first table is orders
-    let totalRevenue = 0;
-
+    // 3. Load Recent Orders Table
+    const ordersTbody = document.querySelector('#recentOrdersTable tbody');
     if (ordersTbody) {
         ordersTbody.innerHTML = '';
-        // Slice and reverse to show newest first
-        orders.slice().reverse().forEach(o => {
-            totalRevenue += parseInt(o.amount);
+        orders.slice(-5).reverse().forEach(o => { // Show last 5
             ordersTbody.innerHTML += `
-            <tr>
-                <td>${o.studentName}</td>
-                <td>${o.course}</td>
-                <td>${o.date}</td>
-                <td>₹ ${o.amount.toLocaleString()}</td>
-                <td><span class="status completed">${o.status}</span></td>
-            </tr>`;
+                    <tr>
+                        <td><strong>${o.studentName}</strong></td>
+                        <td>${o.course}</td>
+                        <td>${o.date}</td>
+                        <td style="color:var(--primary-color); font-weight:bold;">₹ ${o.amount.toLocaleString()}</td>
+                        <td><span class="status completed">${o.status}</span></td>
+                    </tr>`;
         });
     }
 
-    // 4. Update Overview Stats
-    const statWidgets = document.querySelectorAll('.stat-text h4');
-    if (statWidgets.length >= 4) {
-        statWidgets[1].innerText = courses.length; // Active Courses
-        statWidgets[2].innerText = '₹ ' + (totalRevenue > 0 ? (totalRevenue / 1000).toFixed(1) + 'k' : '0'); // Revenue
-        statWidgets[3].innerText = orders.length; // Pending Orders / Total Sales
+    // 4. Load Students Table
+    const studentsTbody = document.querySelector('#studentsTable tbody');
+    if (studentsTbody) {
+        studentsTbody.innerHTML = '';
+        orders.slice().reverse().forEach(o => {
+            studentsTbody.innerHTML += `
+                    <tr>
+                        <td><strong>${o.studentName}</strong></td>
+                        <td>${o.course}</td>
+                        <td>${o.date}</td>
+                        <td><span class="status active">Enrolled</span></td>
+                    </tr>`;
+        });
     }
 
-    // Update Earnings Tab Revenue Stat specifically
-    const earningsStats = document.querySelectorAll('#view-earnings .stat-text h4');
-    if (earningsStats.length >= 1) {
-        earningsStats[0].innerText = '₹ ' + totalRevenue.toLocaleString();
-    }
-
-    // 5. Render the Earnings Chart
-    renderEarningsChart(orders);
+    // 5. Render Charts
+    renderCharts(orders);
 }
 
-// --- Dynamic Earnings Chart Logic ---
-function renderEarningsChart(orders) {
-    const chartContainer = document.querySelector('.placeholder-chart');
-    if (!chartContainer) return;
+// --- Chart.js Integration ---
+function renderCharts(orders) {
+    const salesCtx = document.getElementById('salesChart');
+    const detailedCtx = document.getElementById('detailedChart');
 
-    // Group orders by date to calculate daily revenue
+    if (!salesCtx || !detailedCtx) return;
+
+    // Process data: Group sales by date
     const salesByDate = {};
     orders.forEach(o => {
         if (!salesByDate[o.date]) salesByDate[o.date] = 0;
         salesByDate[o.date] += parseInt(o.amount);
     });
 
-    // Sort dates chronologically
-    const labels = Object.keys(salesByDate).sort((a, b) => Date.parse(a) - Date.parse(b));
-    const data = labels.map(date => salesByDate[date]);
+    // If no data, provide dummy data to show how the graph looks
+    let labels = Object.keys(salesByDate).sort((a, b) => new Date(a) - new Date(b));
+    let data = labels.map(date => salesByDate[date]);
 
-    // Handle empty state (no sales yet)
     if (labels.length === 0) {
-        chartContainer.innerHTML = `
-            <i class="fas fa-chart-bar" style="font-size: 60px; color: #e1e4e8; margin-bottom: 20px;"></i>
-            <h3 style="color: #555;">No Sales Data Yet</h3>
-            <p style="color: #888;">When students purchase courses, the earnings chart will appear here.</p>
-        `;
-        return;
+        labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+        data = [0, 0, 0, 0, 0, 0, 0];
     }
 
-    // Dynamically load Chart.js script if it isn't already loaded
-    if (!window.Chart) {
-        const script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
-        script.onload = () => buildChart(labels, data, chartContainer);
-        document.head.appendChild(script);
-    } else {
-        buildChart(labels, data, chartContainer);
-    }
-}
-
-let earningChartInstance = null;
-
-function buildChart(labels, data, container) {
-    // Replace placeholder with a canvas element
-    container.innerHTML = '<canvas id="earningsChart" style="width:100%; height:350px;"></canvas>';
-    container.style.padding = '20px'; // Adjust padding to fit chart nicely
-
-    const ctx = document.getElementById('earningsChart').getContext('2d');
-
-    // Destroy previous chart instance if it exists to prevent overlapping
-    if (earningChartInstance) {
-        earningChartInstance.destroy();
-    }
-
-    // Create a smooth line chart
-    earningChartInstance = new Chart(ctx, {
+    const chartConfig = {
         type: 'line',
         data: {
             labels: labels,
             datasets: [{
                 label: 'Daily Revenue (₹)',
                 data: data,
-                borderColor: '#007bff', // Primary Bokify Blue
+                borderColor: '#007bff',
                 backgroundColor: 'rgba(0, 123, 255, 0.1)',
                 borderWidth: 3,
                 fill: true,
-                tension: 0.4, // Adds curve to the line
+                tension: 0.4,
                 pointBackgroundColor: '#007bff',
-                pointRadius: 5,
-                pointHoverRadius: 7
+                pointRadius: 4,
+                pointHoverRadius: 6
             }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    position: 'top',
-                }
-            },
+            plugins: { legend: { display: false } },
             scales: {
                 y: {
                     beginAtZero: true,
-                    ticks: {
-                        callback: function (value) {
-                            return '₹ ' + value;
-                        }
-                    }
+                    grid: { borderDash: [5, 5] }
+                },
+                x: {
+                    grid: { display: false }
                 }
             }
         }
-    });
+    };
+
+    if (salesChartInstance) salesChartInstance.destroy();
+    salesChartInstance = new Chart(salesCtx.getContext('2d'), chartConfig);
+
+    if (detailedChartInstance) detailedChartInstance.destroy();
+    // detailed chart could be a bar chart for variety
+    chartConfig.type = 'bar';
+    chartConfig.data.datasets[0].backgroundColor = '#007bff';
+    detailedChartInstance = new Chart(detailedCtx.getContext('2d'), chartConfig);
 }
 
-// --- Navigation Logic ---
+// Function to generate fake sales data for testing the graph
+function generateMockData() {
+    let orders = JSON.parse(localStorage.getItem(STORAGE_KEY_ORDERS)) || [];
+    const today = new Date();
+
+    for (let i = 0; i < 5; i++) {
+        const pastDate = new Date(today);
+        pastDate.setDate(today.getDate() - Math.floor(Math.random() * 7)); // random day in last week
+
+        orders.push({
+            studentName: "Test User " + Math.floor(Math.random() * 100),
+            course: "Mock Course",
+            date: pastDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+            amount: Math.floor(Math.random() * 800) + 200, // random price between 200-1000
+            status: 'Paid'
+        });
+    }
+
+    localStorage.setItem(STORAGE_KEY_ORDERS, JSON.stringify(orders));
+    loadAdminData();
+    showToast('Generated 5 mock sales!');
+}
+
+// --- Course Management ---
+function addNewCourse() {
+    const title = document.getElementById('newCourseTitle').value;
+    const author = document.getElementById('newCourseAuthor').value;
+    const rating = parseFloat(document.getElementById('newCourseRating').value);
+    const cat = document.getElementById('newCourseCat').value;
+    const level = document.getElementById('newCourseLevel').value;
+    const price = parseInt(document.getElementById('newCoursePrice').value);
+    const oldPriceVal = document.getElementById('newCourseOldPrice').value;
+    const img = document.getElementById('newCourseImg').value;
+    const badge = document.getElementById('newCourseBadge').value;
+    const badgeClass = document.getElementById('newCourseBadgeClass').value;
+
+    const courses = JSON.parse(localStorage.getItem(STORAGE_KEY_COURSES)) || [];
+
+    const newCourse = {
+        title: title,
+        author: author,
+        rating: rating,
+        category: cat,
+        level: level,
+        price: price,
+        img: img
+    };
+
+    if (oldPriceVal) newCourse.oldPrice = parseInt(oldPriceVal);
+    if (badge && badgeClass) {
+        newCourse.badge = badge;
+        newCourse.badgeClass = badgeClass;
+    }
+
+    courses.push(newCourse);
+    localStorage.setItem(STORAGE_KEY_COURSES, JSON.stringify(courses));
+
+    loadAdminData();
+    closeModal('addCourseModal');
+
+    // Reset form
+    document.querySelector('#addCourseModal form').reset();
+    showToast('Course Successfully Published!');
+}
+
+function deleteCourse(index) {
+    if (confirm('Are you sure? This will remove the course from the Explore Page catalog.')) {
+        const courses = JSON.parse(localStorage.getItem(STORAGE_KEY_COURSES)) || [];
+        courses.splice(index, 1);
+        localStorage.setItem(STORAGE_KEY_COURSES, JSON.stringify(courses));
+        loadAdminData();
+        showToast('Course Deleted');
+    }
+}
+
+// --- Navigation & UI Logic ---
 function switchTab(viewId, navItem) {
     document.querySelectorAll('main section').forEach(sec => sec.classList.add('hidden'));
     const target = document.getElementById('view-' + viewId);
@@ -169,14 +256,20 @@ function switchTab(viewId, navItem) {
     }
     document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
     if (navItem) navItem.classList.add('active');
+
+    // Auto close sidebar on mobile when navigating
+    if (window.innerWidth <= 768) {
+        document.body.classList.remove('sidebar-mobile-open');
+    }
 }
 
-// --- Logout ---
 function logout() {
-    if (confirm('Logout from Admin Dashboard?')) window.location.href = 'login.html';
+    if (confirm('Are you sure you want to log out of the Admin Dashboard?')) {
+        // Redirect back to the login page as requested
+        window.location.href = '../login.html';
+    }
 }
 
-// --- Toast ---
 function showToast(msg) {
     const t = document.getElementById('toast');
     document.getElementById('toastMsg').innerText = msg;
@@ -184,44 +277,5 @@ function showToast(msg) {
     setTimeout(() => t.classList.remove('show'), 3000);
 }
 
-// --- Modal Logic ---
 function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
 function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
-
-// --- Course Management ---
-function addNewCourse() {
-    const title = document.getElementById('newCourseTitle').value;
-    const cat = document.getElementById('newCourseCat').value;
-    const price = document.getElementById('newCoursePrice').value;
-
-    const courses = JSON.parse(localStorage.getItem('bokify_courses')) || [];
-    courses.push({
-        title: title,
-        category: cat.toLowerCase(),
-        price: parseInt(price),
-        author: 'Admin Added',
-        img: 'https://via.placeholder.com/280x180?text=' + encodeURIComponent(title)
-    });
-
-    // Save to Database
-    localStorage.setItem('bokify_courses', JSON.stringify(courses));
-
-    // Refresh Page Data
-    loadAdminData();
-    closeModal('addCourseModal');
-
-    // Reset inputs
-    document.getElementById('newCourseTitle').value = '';
-    document.getElementById('newCoursePrice').value = '';
-    showToast('Course Added to Catalog');
-}
-
-function deleteCourse(index) {
-    if (confirm('Delete this course from the platform permanently?')) {
-        const courses = JSON.parse(localStorage.getItem('bokify_courses')) || [];
-        courses.splice(index, 1);
-        localStorage.setItem('bokify_courses', JSON.stringify(courses));
-        loadAdminData();
-        showToast('Course Deleted');
-    }
-}
