@@ -1,0 +1,419 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- =========================================
+         META TAGS & TITLE
+    ========================================== -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static 'IMAGE/Blue book logo SVG.png' %}">
+    <title>Bokify - Digital Learning Platform</title>
+
+    <!-- =========================================
+         EXTERNAL RESOURCES (Fonts & Icons)
+    ========================================== -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Link to Custom CSS -->
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+
+</head>
+
+<body>
+    <!-- =========================================
+         HEADER & NAVIGATION BAR
+    ========================================== -->
+    <header class="navbar">
+        <div class="container">
+            <!-- Logo -->
+            <div class="logo">
+                <img src="{% static 'IMAGE/Black_book_logo.png' %}" alt="Bokify logo" class="logo-img">
+                <span>Bokify</span>
+            </div>
+
+            <!-- Nav Links (Modified for SPA switching and Mobile logic) -->
+            <nav class="nav-links" id="navLinks">
+                <ul>
+                    <li><a href="#" onclick="showSection('view-home'); closeMobileMenu(); return false;">Home</a></li>
+                    <li><a href="#" onclick="showSection('view-courses'); closeMobileMenu(); return false;">All
+                            Courses</a></li>
+                    <li><a href="#" onclick="showSection('view-process'); closeMobileMenu(); return false;">Process</a>
+                    </li>
+                    <li><a href="#" onclick="showSection('view-about'); closeMobileMenu(); return false;">About Us</a>
+                    </li>
+                    <li><a href="#" onclick="showSection('view-contact'); closeMobileMenu(); return false;">Contact</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Nav Icons -->
+            <div class="nav-icons">
+                <a href="{% url 'login_page' %}" class="user-icon"><i class="fas fa-user"></i></a>
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Overlay element for modern mobile menu -->
+    <div class="menu-overlay" id="menuOverlay" onclick="closeMobileMenu()"></div>
+
+    <main>
+        <!-- =========================================
+             HERO SECTION (Banner)
+        ========================================== -->
+        <div id="view-home" class="page-section active">
+            <section id="home" class="hero-section">
+                <div class="container hero-content">
+                    <!-- Text Content -->
+                    <div class="text-content reveal">
+                        <p class="author-tag">By top educators</p>
+                        <h1>Find the perfect online course for your child</h1>
+                        <a href="#" onclick="showSection('view-courses'); return false;" class="btn-buy-book">Explore
+                            Courses</a>
+                        <div class="retailers">
+                            <span class="retailer-logo"
+                                style="background-image: url('https://via.placeholder.com/80x20/F0F0F0/000000?text=Trusted+By+Parents')"></span>
+                            <span class="retailer-logo"
+                                style="background-image: url('https://via.placeholder.com/80x20/F0F0F0/000000?text=Safe+%26+Secure')"></span>
+                            <span class="retailer-logo"
+                                style="background-image: url('https://via.placeholder.com/80x20/F0F0F0/000000?text=24%2F7+Support')"></span>
+                        </div>
+                    </div>
+
+                    <!-- Hero Images -->
+                    <div class="book-image-container reveal" style="transition-delay: 0.2s;">
+                        <img src="{% static 'IMAGE/BOOK1.jpg' %}" alt="Online Course Ebook"
+                            class="book-cover main-book" />
+                        <img src="{% static 'IMAGE/BOOK2.png' %}" alt="Study Guide" class="book-cover secondary-book" />
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- =========================================
+             FEATURED COURSES GRID
+        ========================================== -->
+        <div id="view-courses" class="page-section">
+            <section id="courses" class="collection-section">
+                <div class="container">
+                    <div class="reveal">
+                        <h2>Featured Courses</h2>
+                        <p class="description">
+                            Discover our most popular courses taught by industry experts to help your child excel in the
+                            digital
+                            world.
+                        </p>
+                    </div>
+
+                    <!-- Course Cards Grid -->
+                    <div class="book-grid">
+
+                        <div class="book-card reveal" data-category="coding" style="transition-delay: 0.1s;">
+                            <img src="{% static 'IMAGE/fundamental-kids-coding.jpg' %}" alt="Coding Course Thumbnail"
+                                class="cover-image" />
+                            <div>
+                                <div class="rating">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                        class="fas fa-star"></i><i class="far fa-star"></i>
+                                </div>
+                                <h3>Coding Fundamentals for Kids</h3>
+                                <span class="price">₹ 999 <span class="old-price">₹ 1,499</span></span>
+                            </div>
+                        </div>
+
+                        <div class="book-card reveal" data-category="mathematics" style="transition-delay: 0.2s;">
+                            <img src="{% static 'IMAGE/math-class.jpg' %}" alt="Math Course Thumbnail"
+                                class="cover-image" />
+                            <div>
+                                <div class="rating">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                        class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                                <h3>Advanced Math Skills (Grade 7+)</h3>
+                                <span class="price">₹ 1,299 <span class="old-price">₹ 1,899</span></span>
+                            </div>
+                        </div>
+
+                        <div class="book-card reveal" data-category="robotics" style="transition-delay: 0.3s;">
+                            <img src="{% static 'IMAGE/robotic-class.jpg' %}" alt="Robotics Course Thumbnail"
+                                class="cover-image" />
+                            <div>
+                                <div class="rating">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                        class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                                <h3>Introduction to Robotics</h3>
+                                <span class="price">₹ 1,499 <span class="old-price">₹ 2,199</span></span>
+                            </div>
+                        </div>
+
+                        <div class="book-card reveal" data-category="arts" style="transition-delay: 0.1s;">
+                            <img src="{% static 'IMAGE/art-class.jpg' %}" alt="Art Course Thumbnail"
+                                class="cover-image" />
+                            <div>
+                                <div class="rating">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                        class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                                <h3>Digital Art Masterclass</h3>
+                                <span class="price">₹ 899 <span class="old-price">₹ 1,299</span></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Advertisement / Redirect Button -->
+                    <div class="reveal"
+                        style="display: flex; justify-content: flex-end; margin-top: 50px; transition-delay: 0.3s;">
+                        <a href="{% url 'explore' %}"
+                            style="background-color: #6366f1; color: white; text-decoration: none; padding: 15px 35px; border-radius: 12px; font-size: 1.1rem; font-weight: bold; display: inline-flex; align-items: center; gap: 12px; box-shadow: 0 10px 20px rgba(99, 102, 241, 0.2); transition: all 0.3s ease;"
+                            onmouseover="this.style.opacity='0.9'; this.style.transform='translateY(-2px)';"
+                            onmouseout="this.style.opacity='1'; this.style.transform='translateY(0)';">
+                            View More Courses <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+
+        <!-- =========================================
+             ROADMAP (ABOUT US) SECTION
+        ========================================== -->
+        <div id="view-about" class="page-section">
+            <section id="about" class="roadmap-section">
+                <div class="container">
+                    <!-- Intro Text -->
+                    <div class="lead reveal">
+                        <h2>Our Journey</h2>
+                        <p>
+                            From a small idea to a leading digital learning platform, here is how we grew to empower
+                            thousands of students worldwide.
+                        </p>
+                    </div>
+
+                    <!-- Timeline -->
+                    <div class="timeline">
+                        <!-- Item 1: 2020 -->
+                        <div class="timeline-item left reveal">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <span class="timeline-date">2020</span>
+                                <h3>The Inception</h3>
+                                <p>
+                                    Bokify was founded with a simple mission: to make quality education accessible to
+                                    every
+                                    child, everywhere, amidst global changes.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Item 2: 2022 -->
+                        <div class="timeline-item right reveal">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <span class="timeline-date">2022</span>
+                                <h3>First Milestone</h3>
+                                <p>
+                                    Launched 100+ comprehensive courses covering Coding, Mathematics, and Robotics,
+                                    impacting
+                                    over 2,000 students.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Item 3: 2024 -->
+                        <div class="timeline-item left reveal">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <span class="timeline-date">2024</span>
+                                <h3>Community Growth</h3>
+                                <p>
+                                    Reached 10,000 active learners and partnered with 50+ certified educators to bring
+                                    specialized learning paths.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Item 4: 2026 -->
+                        <div class="timeline-item right reveal">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <span class="timeline-date">2026</span>
+                                <h3>Future Innovation</h3>
+                                <p>
+                                    Launching immersive VR classrooms and a dedicated mobile ecosystem to redefine
+                                    interactive remote education.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- =========================================
+             HOW IT WORKS (PROCESS) SECTION
+        ========================================== -->
+        <div id="view-process" class="page-section">
+            <section id="process" class="process-section">
+                <div class="container">
+                    <div class="lead reveal">
+                        <h2>How It Works</h2>
+                        <p>Master new skills in just three simple steps. We make learning easy, accessible, and
+                            rewarding.</p>
+                    </div>
+
+                    <div class="process-grid">
+                        <!-- Step 1 -->
+                        <div class="process-step reveal" style="transition-delay: 0.1s;">
+                            <div class="step-icon-box">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <h3>1. Browse & Select</h3>
+                            <p>Explore our extensive library of courses ranging from Coding to Arts. Filter by age or
+                                interest to find the perfect match.</p>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div class="process-step reveal" style="transition-delay: 0.2s;">
+                            <div class="step-icon-box">
+                                <i class="fas fa-laptop-code"></i>
+                            </div>
+                            <h3>2. Learn & Practice</h3>
+                            <p>Watch high-quality video lessons and solve interactive challenges. Our mentors are always
+                                there to guide you.</p>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="process-step reveal" style="transition-delay: 0.3s;">
+                            <div class="step-icon-box">
+                                <i class="fas fa-certificate"></i>
+                            </div>
+                            <h3>3. Get Certified</h3>
+                            <p>Complete your final project to earn a verified certificate. Showcase your skills to the
+                                world and level up!</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- =========================================
+             CONTACT US SECTION (NEW)
+        ========================================== -->
+        <div id="view-contact" class="page-section">
+            <section class="contact-section" id="contact">
+                <div class="container">
+                    <div class="lead reveal">
+                        <h2>Get In Touch</h2>
+                        <p>Have questions about our courses or platform? We'd love to hear from you. Send us a message
+                            and we'll respond as soon as possible.</p>
+                    </div>
+
+                    <div class="contact-grid">
+                        <!-- Contact Information -->
+                        <div class="contact-card contact-info-list reveal" style="transition-delay: 0.1s;">
+                            <h3>Contact Information</h3>
+                            <p>
+                                <i class="fas fa-map-marker-alt"></i>
+                                123 Education Lane, Tech District, Innovation City, 10010
+                            </p>
+                            <p>
+                                <i class="fas fa-phone-alt"></i>
+                                +1 (800) 123-4567
+                            </p>
+                            <p>
+                                <i class="fas fa-envelope"></i>
+                                support@bokify.com
+                            </p>
+                            <p>
+                                <i class="fas fa-clock"></i>
+                                Mon - Fri: 9:00 AM - 6:00 PM
+                            </p>
+                        </div>
+
+                        <!-- Contact Form -->
+                        <div class="contact-card contact-form reveal" style="transition-delay: 0.2s;">
+                            <h3>Send a Message</h3>
+                            <form onsubmit="submitContactForm(event);">
+                                <input type="text" placeholder="Your Full Name" required>
+                                <input type="email" placeholder="Your Email Address" required>
+                                <input type="text" placeholder="Subject" required>
+                                <textarea placeholder="How can we help you today?" rows="5" required></textarea>
+                                <button type="submit">Submit Message</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- =========================================
+         FOOTER SECTION (Globally Visible)
+    ========================================== -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid reveal">
+                <div class="footer-col">
+                    <div class="logo">Bokify</div>
+                    <p>Empowering the next generation with high-quality, accessible, and engaging online education.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="#" onclick="showSection('view-about'); return false;">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#" onclick="showSection('view-contact'); return false;">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Platform</h3>
+                    <ul>
+                        <li><a href="#" onclick="showSection('view-courses'); return false;">All Courses</a></li>
+                        <li><a href="#">Coding</a></li>
+                        <li><a href="#">Mathematics</a></li>
+                        <li><a href="#">Robotics</a></li>
+                        <li><a href="#">Science</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Bokify. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Link to Custom JS -->
+    <script src="{% static 'script.js' %}"></script>
+
+</body>
+
+</html>
