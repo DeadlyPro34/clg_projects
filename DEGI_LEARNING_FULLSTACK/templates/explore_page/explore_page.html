@@ -1,0 +1,411 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static 'IMAGE/Blue book logo SVG.png' %}">
+    <title>Explore Courses - Bokify</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'explore_page/explore_page.css' %}">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="container">
+            <div class="logo">
+                <img src="{% static 'IMAGE/Black_book_logo.png' %}" alt="Bokify logo" class="logo-img">
+                <span>Bokify</span>
+            </div>
+            <nav class="nav-links">
+                <ul>
+                    <li><a href="{% url 'index' %}">Home</a></li>
+                    <li>
+                        <div class="cart-icon" id="cartIcon" aria-label="Shopping Cart">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-badge" id="cartBadge">0</span>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="container explore-layout">
+
+        <!-- === VIEW: COURSES (Default) === -->
+        <div id="courses-view" class="view-section">
+
+            <!-- Toolbar -->
+            <div class="toolbar reveal">
+                <div class="toolbar-left">
+                    <button type="button" class="filter-toggle-btn" id="filterToggle">
+                        <i class="fas fa-filter"></i> Filters
+                    </button>
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="Search for Python, Math, etc...">
+                    </div>
+                </div>
+
+                <div class="sorting">
+                    <select class="sort-select">
+                        <option>Sort by: Popularity</option>
+                        <option>Price: Low to High</option>
+                        <option>Price: High to Low</option>
+                        <option>Newest First</option>
+                    </select>
+                </div>
+
+                <!-- Filter Dropdown -->
+                <div class="filter-dropdown" id="filterDropdown">
+                    <div class="filter-group">
+                        <div class="filter-title">Category</div>
+                        <ul class="filter-list">
+                            <li><label class="filter-checkbox"><input type="checkbox" name="category" value="all"
+                                        checked> All Subjects</label></li>
+                            <li><label class="filter-checkbox"><input type="checkbox" name="category" value="coding">
+                                    Coding & Tech</label></li>
+                            <li><label class="filter-checkbox"><input type="checkbox" name="category"
+                                        value="mathematics"> Mathematics</label></li>
+                            <li><label class="filter-checkbox"><input type="checkbox" name="category" value="science">
+                                    Science & Robotics</label></li>
+                            <li><label class="filter-checkbox"><input type="checkbox" name="category" value="arts"> Arts
+                                    & Design</label></li>
+                            <li><label class="filter-checkbox"><input type="checkbox" name="category" value="languages">
+                                    Languages</label></li>
+                        </ul>
+                    </div>
+                    <div class="filter-group">
+                        <div class="filter-title">Level</div>
+                        <ul class="filter-list">
+                            <li><label class="filter-checkbox"><input type="checkbox" name="level" value="beginner">
+                                    Beginner (Gr 1-5)</label></li>
+                            <li><label class="filter-checkbox"><input type="checkbox" name="level" value="intermediate">
+                                    Intermediate (Gr 6-8)</label></li>
+                            <li><label class="filter-checkbox"><input type="checkbox" name="level" value="advanced">
+                                    Advanced (Gr 9-12)</label></li>
+                        </ul>
+                    </div>
+                    <div class="filter-group">
+                        <div class="filter-title">Price Range</div>
+                        <div class="price-range-inputs">
+                            <input type="number" id="minPrice" placeholder="Min" class="price-input">
+                            <span style="color:#aaa">-</span>
+                            <input type="number" id="maxPrice" placeholder="Max" class="price-input">
+                        </div>
+                        <button type="button" class="apply-btn" id="applyFiltersBtn">Apply Filter</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course Grid -->
+            <div class="grid-container" id="coursesGrid">
+                <!-- JavaScript will inject courses here -->
+            </div>
+
+        </div>
+
+        <!-- === VIEW: COURSE DETAIL (NEW) === -->
+        <div id="detail-view" class="view-section" style="display: none;">
+            <button type="button" class="back-btn reveal" onclick="showCourses()">
+                <i class="fas fa-arrow-left"></i> Back to Courses
+            </button>
+            <div id="detailContent" class="reveal">
+                <!-- Course details populated by JS -->
+            </div>
+        </div>
+
+        <!-- === VIEW: CHECKOUT === -->
+        <div id="checkout-view" class="view-section" style="display: none;">
+            <div class="stepper">
+                <div class="step completed">
+                    <div class="step-circle"><i class="fas fa-check"></i></div>Cart
+                </div>
+                <div class="step-line completed"></div>
+                <div class="step active">
+                    <div class="step-circle">2</div>Billing
+                </div>
+                <div class="step-line"></div>
+                <div class="step">
+                    <div class="step-circle">3</div>Payment
+                </div>
+            </div>
+
+            <button type="button" class="back-btn reveal" onclick="showCourses()">
+                <i class="fas fa-arrow-left"></i> Back to Courses
+            </button>
+
+            <div class="checkout-layout reveal">
+                <div class="checkout-form-container">
+                    <h2 class="section-title"><i class="fas fa-map-marker-alt" style="color:var(--primary-color);"></i>
+                        Shipping & Billing</h2>
+                    <form id="checkoutForm" onsubmit="event.preventDefault(); showPayment();">
+                        <div class="form-card">
+                            <div class="form-row">
+                                <div class="input-group">
+                                    <label>First Name</label>
+                                    <div class="input-wrapper">
+                                        <i class="fas fa-user"></i>
+                                        <input type="text" id="billFirstName" required placeholder="John">
+                                    </div>
+                                </div>
+                                <div class="input-group">
+                                    <label>Last Name</label>
+                                    <div class="input-wrapper">
+                                        <i class="fas fa-user"></i>
+                                        <input type="text" id="billLastName" required placeholder="Doe">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <label>Email Address</label>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-envelope"></i>
+                                    <input type="email" required placeholder="john@example.com">
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <label>Phone Number</label>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-phone"></i>
+                                    <input type="tel" required placeholder="+91 98765 43210">
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <label>Address</label>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-home"></i>
+                                    <input type="text" required placeholder="Street Address, Apt, Suite">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="input-group">
+                                    <label>City</label>
+                                    <div class="input-wrapper">
+                                        <i class="fas fa-city"></i>
+                                        <input type="text" required>
+                                    </div>
+                                </div>
+                                <div class="input-group">
+                                    <label>Postal Code</label>
+                                    <div class="input-wrapper">
+                                        <i class="fas fa-mail-bulk"></i>
+                                        <input type="text" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 25px;">
+                            <button type="submit" class="checkout-btn">Proceed to Payment <i class="fas fa-arrow-right"
+                                    style="margin-left: 10px;"></i></button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="checkout-summary-container">
+                    <div class="summary-card">
+                        <h3 style="margin-bottom: 20px;">Order Summary</h3>
+                        <div id="checkoutItemsList"></div>
+                        <div class="summary-row total">
+                            <span>Total</span>
+                            <span id="checkoutTotal">₹ 0</span>
+                        </div>
+                        <div
+                            style="margin-top: 15px; font-size: 13px; color: #777; display: flex; align-items: center; gap: 5px;">
+                            <i class="fas fa-shield-alt"></i> Secure Checkout
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- === VIEW: PAYMENT === -->
+        <div id="payment-view" class="view-section" style="display: none;">
+            <div class="stepper">
+                <div class="step completed">
+                    <div class="step-circle"><i class="fas fa-check"></i></div>Cart
+                </div>
+                <div class="step-line completed"></div>
+                <div class="step completed">
+                    <div class="step-circle"><i class="fas fa-check"></i></div>Billing
+                </div>
+                <div class="step-line completed"></div>
+                <div class="step active">
+                    <div class="step-circle">3</div>Payment
+                </div>
+            </div>
+
+            <button type="button" class="back-btn reveal" onclick="showCheckout()">
+                <i class="fas fa-arrow-left"></i> Back to Billing
+            </button>
+
+            <div class="checkout-layout reveal" style="justify-content: center;">
+                <div style="max-width: 500px; width: 100%;">
+                    <h2 class="section-title" style="justify-content: center;"><i class="fas fa-lock"
+                            style="color:var(--primary-color);"></i> Secure Payment</h2>
+
+                    <div class="form-card">
+                        <div class="card-preview">
+                            <i class="fab fa-cc-visa card-logo-icon"></i>
+                            <div class="card-chip"></div>
+                            <div class="card-number-display" id="displayCardNumber">#### #### #### ####</div>
+                            <div class="card-details-row">
+                                <div>
+                                    <span>Card Holder</span>
+                                    <div class="card-val" id="displayCardName">YOUR NAME</div>
+                                </div>
+                                <div>
+                                    <span>Expires</span>
+                                    <div class="card-val" id="displayCardExpiry">MM/YY</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <form id="paymentForm" onsubmit="event.preventDefault(); window.processPayment();">
+                            <div class="input-group">
+                                <label>Cardholder Name</label>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-user-tag"></i>
+                                    <input type="text" id="cardName" required placeholder="Name on Card"
+                                        oninput="updateCardName(this.value)">
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <label>Card Number</label>
+                                <div class="input-wrapper">
+                                    <i class="far fa-credit-card"></i>
+                                    <input type="text" id="cardNumber" required placeholder="0000 0000 0000 0000"
+                                        maxlength="19" oninput="updateCardNumber(this.value)">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="input-group">
+                                    <label>Expiry Date</label>
+                                    <div class="input-wrapper">
+                                        <i class="far fa-calendar-alt"></i>
+                                        <input type="text" id="cardExpiry" required placeholder="MM/YY" maxlength="5"
+                                            oninput="updateCardExpiry(this.value)">
+                                    </div>
+                                </div>
+                                <div class="input-group">
+                                    <label>CVV</label>
+                                    <div class="input-wrapper">
+                                        <i class="fas fa-lock"></i>
+                                        <input type="password" required placeholder="123" maxlength="3">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="checkout-btn" id="payButton">
+                                Pay <span id="payAmount">₹ 0</span>
+                            </button>
+                        </form>
+                    </div>
+                    <p style="text-align: center; margin-top: 20px; color: #777; font-size: 13px;">
+                        <i class="fas fa-lock"></i> 128-bit SSL Encrypted Payment
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- === VIEW: SUCCESS === -->
+        <div id="success-view" class="view-section" style="display: none;">
+            <div class="success-container reveal">
+                <i class="fas fa-check-circle success-icon-lg"></i>
+                <h1>Course Unlocked Successfully!</h1>
+                <p style="color: #666; font-size: 18px; margin: 20px 0;">
+                    Your payment was successful. The course is now available in your Student Dashboard.
+                </p>
+                <div style="margin-top: 30px;">
+                    <button type="button" onclick="showCourses()" class="checkout-btn"
+                        style="display: inline-block; width: auto; padding: 12px 30px;">
+                        Go to My Dashboard
+                    </button>
+                    <button type="button" onclick="showCourses()"
+                        style="background:none; border:none; color: var(--primary-color); text-decoration: underline; margin-left: 20px; cursor: pointer; font-size: 16px;">
+                        Continue Exploring
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h2 class="logo" style="color:white; margin-bottom:20px;">Bokify</h2>
+                    <p>Empowering the next generation with high-quality, accessible, and engaging online education.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li>info@bokify.com</li>
+                        <li>+91 98765 43210</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Bokify. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Modal -->
+    <div class="cart-overlay" id="cartOverlay">
+        <div class="cart-modal">
+            <div class="cart-header">
+                <h2>Your Cart</h2>
+                <span class="close-cart" id="closeCart">&times;</span>
+            </div>
+            <div class="cart-items" id="cartItemsContainer">
+                <p class="cart-empty-msg">Your cart is empty.</p>
+            </div>
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <span>Total:</span>
+                    <span id="cartTotal">₹ 0</span>
+                </div>
+                <button type="button" class="checkout-btn" id="modalCheckoutBtn">Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle" style="color: #28a745;"></i>
+        <span id="toastMessage">Item added to cart!</span>
+    </div>
+
+    <!-- JS for Logic -->
+    <script src="{% static 'explore_page/explore_page.js' %}"></script>
+
+</body>
+
+</html>
