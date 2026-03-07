@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="Blue book logo SVG.png">
+    <title>Admin Dashboard - Bokify</title>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Chart.js for Live Graph -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="admin_dashboard.css">
+</head>
+
+<body>
+
+    <!-- Mobile Sidebar Overlay -->
+    <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div style="display:flex; align-items:center; gap:10px;">
+                <i class="fas fa-shield-alt"></i> Bokify Admin
+            </div>
+            <i class="fas fa-times close-sidebar-mobile" onclick="toggleSidebar()"></i>
+        </div>
+        <ul class="nav-links">
+            <li class="nav-item active" onclick="switchTab('dashboard', this)">
+                <i class="fas fa-home"></i> Dashboard
+            </li>
+            <li class="nav-item" onclick="switchTab('courses', this)">
+                <i class="fas fa-book"></i> Manage Courses
+            </li>
+            <li class="nav-item" onclick="switchTab('students', this)">
+                <i class="fas fa-users"></i> Students
+            </li>
+            <li class="nav-item" onclick="switchTab('earnings', this)">
+                <i class="fas fa-chart-line"></i> Analytics & Sales
+            </li>
+            <li class="nav-item" onclick="switchTab('settings', this)">
+                <i class="fas fa-cog"></i> Settings
+            </li>
+            <li class="nav-item" style="margin-top: auto;" onclick="logout()">
+                <div style="display:flex; gap:15px; color:inherit; text-decoration:none;">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </div>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="top-bar-left">
+                <div class="sidebar-toggle" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <div class="search-bar">
+                    <i class="fas fa-search" style="color:#aaa;"></i>
+                    <input type="text" placeholder="Search...">
+                </div>
+            </div>
+            <div class="admin-profile">
+                <span>Hello, <strong>Admin</strong></span>
+                <div class="admin-img">AD</div>
+            </div>
+        </div>
+
+        <div class="content-padding">
+
+            <!-- === VIEW: DASHBOARD === -->
+            <section id="view-dashboard" class="fade-in">
+                <div class="stats-container">
+                    <div class="stat-widget">
+                        <div class="stat-text">
+                            <h4 id="statTotalStudents">0</h4>
+                            <span>Total Students</span>
+                        </div>
+                        <div class="stat-icon" style="background:#e0e7ff; color:#4f46e5;">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                    </div>
+                    <div class="stat-widget">
+                        <div class="stat-text">
+                            <h4 id="statActiveCourses">0</h4>
+                            <span>Active Courses</span>
+                        </div>
+                        <div class="stat-icon" style="background:#d1fae5; color:#10b981;">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                    </div>
+                    <div class="stat-widget">
+                        <div class="stat-text">
+                            <h4 id="statTotalRevenue">₹ 0</h4>
+                            <span>Total Revenue</span>
+                        </div>
+                        <div class="stat-icon" style="background:#ffedd5; color:#f97316;">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                    </div>
+                    <div class="stat-widget">
+                        <div class="stat-text">
+                            <h4 id="statTotalSales">0</h4>
+                            <span>Total Sales</span>
+                        </div>
+                        <div class="stat-icon" style="background:#fee2e2; color:#ef4444;">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Sales Graph on Dashboard -->
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3>Sales Overview</h3>
+                        <button class="btn-action btn-sm" onclick="generateMockData()">Generate Mock Sales</button>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="salesChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3>Recent Enrollments</h3>
+                        <span style="font-size:12px; color:#777;">Last 30 Days</span>
+                    </div>
+                    <table id="recentOrdersTable">
+                        <thead>
+                            <tr>
+                                <th>Student Name</th>
+                                <th>Course</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Data injected via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- === VIEW: MANAGE COURSES === -->
+            <section id="view-courses" class="fade-in hidden">
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3>Course Catalog</h3>
+                        <button class="btn-action" onclick="openModal('addCourseModal')">+ Add New Course</button>
+                    </div>
+                    <table id="coursesTable">
+                        <thead>
+                            <tr>
+                                <th>Course Name</th>
+                                <th>Category</th>
+                                <th>Level</th>
+                                <th>Price</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Data injected via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- === VIEW: STUDENTS === -->
+            <section id="view-students" class="fade-in hidden">
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3>Student Directory</h3>
+                        <div class="search-bar" style="width: 100%; max-width: 250px;">
+                            <input type="text" placeholder="Filter students...">
+                        </div>
+                    </div>
+                    <table id="studentsTable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Enrolled Course</th>
+                                <th>Enrollment Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Data injected via JS based on orders -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- === VIEW: ANALYTICS & EARNINGS === -->
+            <section id="view-earnings" class="fade-in hidden">
+                <div class="stats-container">
+                    <div class="stat-widget">
+                        <div class="stat-text">
+                            <h4 id="analyticsRevenue">₹ 0</h4>
+                            <span>Total Lifetime Revenue</span>
+                        </div>
+                        <div class="stat-icon" style="background:#d1fae5; color:#059669;">
+                            <i class="fas fa-arrow-up"></i>
+                        </div>
+                    </div>
+                    <div class="stat-widget">
+                        <div class="stat-text">
+                            <h4 id="analyticsAvgOrder">₹ 0</h4>
+                            <span>Average Order Value</span>
+                        </div>
+                        <div class="stat-icon" style="background:#e0e7ff; color:#4f46e5;">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3>Detailed Revenue Chart</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="detailedChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- === VIEW: SETTINGS === -->
+            <section id="view-settings" class="fade-in hidden">
+                <div class="table-card" style="max-width: 600px;">
+                    <h3>Platform Settings</h3><br>
+                    <div class="form-group">
+                        <label>Site Name</label>
+                        <input type="text" class="form-control" value="Bokify">
+                    </div>
+                    <div class="form-group">
+                        <label>Support Email</label>
+                        <input type="email" class="form-control" value="admin@bokify.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Maintenance Mode</label>
+                        <select class="form-control">
+                            <option>Off</option>
+                            <option>On</option>
+                        </select>
+                    </div>
+                    <button class="btn-action" onclick="showToast('Settings Saved')">Save Changes</button>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Modal for Adding New Course (UPDATED WITH ALL EXPLORE PAGE FIELDS) -->
+    <div id="addCourseModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Course</h3>
+                <span class="close-modal" onclick="closeModal('addCourseModal')">&times;</span>
+            </div>
+            <form onsubmit="event.preventDefault(); addNewCourse();">
+                
+                <div class="form-group">
+                    <label>Course Title</label>
+                    <input type="text" id="newCourseTitle" class="form-control" placeholder="e.g. Master Python 101" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Author / Educator</label>
+                        <input type="text" id="newCourseAuthor" class="form-control" placeholder="e.g. Jane Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Rating (1-5)</label>
+                        <input type="number" id="newCourseRating" class="form-control" step="0.1" min="1" max="5" value="4.5" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select id="newCourseCat" class="form-control">
+                            <option value="coding">Coding & Tech</option>
+                            <option value="mathematics">Mathematics</option>
+                            <option value="science">Science & Robotics</option>
+                            <option value="arts">Arts & Design</option>
+                            <option value="languages">Languages</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Level</label>
+                        <select id="newCourseLevel" class="form-control">
+                            <option value="beginner">Beginner</option>
+                            <option value="intermediate">Intermediate</option>
+                            <option value="advanced">Advanced</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Current Price (₹)</label>
+                        <input type="number" id="newCoursePrice" class="form-control" required min="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Old Price (₹) - Optional</label>
+                        <input type="number" id="newCourseOldPrice" class="form-control" min="0">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Image URL (Unsplash recommended)</label>
+                        <input type="url" id="newCourseImg" class="form-control" placeholder="https://images.unsplash.com/..." required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Badge Text (Optional)</label>
+                        <input type="text" id="newCourseBadge" class="form-control" placeholder="e.g. Bestseller, New">
+                    </div>
+                    <div class="form-group">
+                        <label>Badge Style</label>
+                        <select id="newCourseBadgeClass" class="form-control">
+                            <option value="">None</option>
+                            <option value="bestseller">Yellow (Bestseller)</option>
+                            <option value="new">Green (New)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-action" style="width:100%; margin-top: 10px;">Publish Course to Explore Page</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMsg">Action Successful</span>
+    </div>
+
+    <!-- Custom Logic Script -->
+    <script src="admin_dashboard.js"></script>
+</body>
+
+</html>
