@@ -116,4 +116,4 @@ High-fidelity mockups are available in the **Figma_design** folder for both mobi
 This project is created for educational purposes only.
 
 ---
-© 2024 EcoJourney Global. All Rights Reserved.
+© 2026 EcoJourney Global. All Rights Reserved.
