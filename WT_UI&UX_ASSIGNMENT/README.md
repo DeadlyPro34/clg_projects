@@ -1,5 +1,7 @@
 # 🌿 EcoJourney | Sustainable Travel Guides
 
+**Domain:** **67. Sustainable Travel Tips and Guides** - Eco-friendly travel guides and tips for responsible tourism.
+
 **EcoJourney** is a premium, responsive web application designed for conscious travelers who want to explore the world while minimizing their environmental footprint.
 
 This project highlights a modern UI/UX approach to sustainable tourism, combining curated travel guides, personalized route planning, and community-driven features.
@@ -116,4 +118,4 @@ High-fidelity mockups are available in the **Figma_design** folder for both mobi
 This project is created for educational purposes only.
 
 ---
-© 2026 EcoJourney Global. All Rights Reserved.
+© 2024 EcoJourney Global. All Rights Reserved.
