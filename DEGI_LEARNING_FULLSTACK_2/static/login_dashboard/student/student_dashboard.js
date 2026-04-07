@@ -220,7 +220,7 @@ function switchTab(viewId, navItem) {
 
 function logout() {
     if (confirm('Logout from Student Dashboard?')) {
-        window.location.href = '../login.html';
+        window.location.href = '/logout/';
     }
 }
 
