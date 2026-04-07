@@ -4,11 +4,11 @@
   <img src="https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white" alt="Django" />
   <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
   <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript" />
-  <img src="https://img.shields.io/badge/Claude--AI-6B46C1?style=for-the-badge&logo=anthropic&logoColor=white" alt="Claude AI" />
+  <img src="https://img.shields.io/badge/Gemini--AI-4285F4?style=for-the-badge&logo=google&logoColor=white" alt="Gemini AI" />
   <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License" />
 </p>
 
-**Bokify** is a premium, AI-driven digital classroom designed to make learning immersive, interactive, and safe for students—especially children. By blending cutting-edge Claude AI capabilities with a robust Django backbone, Bokify empowers kids to explore courses, solve doubts instantly, and track their educational journey with ease.
+**Bokify** is a premium, AI-driven digital classroom designed to make learning immersive, interactive, and safe for students—especially children. By blending cutting-edge **Google Gemini** capabilities with a robust Django backbone, Bokify empowers kids to explore courses, solve doubts instantly, and track their educational journey with ease.
 
 ---
 
@@ -21,7 +21,7 @@
 *   **Curriculum Management:** Admin portal for creating, updating, and reordering lessons.
 
 ### 🤖 AI-Powered Intelligence
-*   **AI Doubt Solver:** Integrated Claude API that answers student questions in plain, kid-friendly language.
+*   **AI Doubt Solver:** Integrated **Google Gemini API** that answers student questions in plain, kid-friendly language.
 *   **Contextual Assistance:** AI that understands the lesson content to provide precise help.
 
 ### 💎 Unique Student Utilities
@@ -36,7 +36,7 @@
 *   **Backend:** [Django 5.x](https://www.djangoproject.com/) (Python)
 *   **Frontend:** HTML5, Modern Vanilla CSS3, JavaScript (ES6+)
 *   **Database:** SQLite3 (Development-ready, migratable to PostgreSQL)
-*   **AI Engine:** [Claude API](https://www.anthropic.com/api) (Anthropic)
+*   **AI Engine:** [Google Gemini API](https://ai.google.dev/) (Google AI Studio)
 *   **PDF Generation:** [ReportLab](https://www.reportlab.com/)
 
 ---
@@ -83,7 +83,7 @@ source venv/bin/activate
 
 ### 3. Install Dependencies
 ```bash
-pip install django pillow reportlab anthropic
+pip install django pillow reportlab google-generativeai python-dotenv
 ```
 
 ### 4. Database Initialization
@@ -102,16 +102,19 @@ Visit: `http://127.0.0.1:8000/`
 
 ## 🔐 Environment Variables
 
-Create a `.env` file in the root directory (or set them in your shell):
+Create a `.env` file in the root directory to store your sensitive keys. **Never commit this file to GitHub.**
 
 ```env
 # AI Integration
-CLAUDE_API_KEY=your_anthropic_api_key_here
+GOOGLE_API_KEY=your_gemini_api_key_here
 
 # Security
 SECRET_KEY=your_django_secret_key_here
 DEBUG=True
 ```
+
+> [!IMPORTANT]
+> Ensure `.env` is added to your `.gitignore` file to prevent accidental leaks.
 
 ---
 
@@ -136,7 +139,7 @@ DEBUG=True
 *(Image Placeholder: Focused video player with PDF download buttons)*
 
 ### 🤖 AI Doubt Solver
-*(Image Placeholder: Chat interface showing a kid's question and Claude's simplified answer)*
+*(Image Placeholder: Chat interface showing a kid's question and Gemini's simplified answer)*
 
 ---
 
