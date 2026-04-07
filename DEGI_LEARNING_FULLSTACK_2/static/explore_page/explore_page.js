@@ -171,6 +171,7 @@ window.addToCart = (index) => {
     const course = courses[index];
     const parsedPrice = parseInt(course.price) || 0;
     const item = {
+        id: course.id || null,
         title: course.title,
         price: parsedPrice,
         img: course.img
@@ -247,6 +248,7 @@ window.processPayment = () => {
                 'X-CSRFToken': getCookie('csrftoken')
             },
             body: JSON.stringify({
+                course_id: item.id || null,
                 course_name: item.title,
                 price: item.price,
                 bill_id: billId
