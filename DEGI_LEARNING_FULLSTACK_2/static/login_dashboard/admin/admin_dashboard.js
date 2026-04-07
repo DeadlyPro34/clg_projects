@@ -24,6 +24,18 @@ const STORAGE_KEY_ORDERS = 'bokify_orders';
 
 document.addEventListener('DOMContentLoaded', () => {
     loadAdminData();
+
+    setInterval(() => {
+        if (!document.hidden) {
+            loadAdminData();
+        }
+    }, 30000);
+
+    document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) {
+            loadAdminData();
+        }
+    });
 });
 
 // --- Sidebar Toggle Logic ---
@@ -52,6 +64,7 @@ async function loadAdminData() {
     // FETCH REAL STATS FROM DB 🚀
     let stats = { total_revenue:0, sales_count:0, students_count:0, courses_count:0, avg_order:0 };
     let orders = [];
+    let studentsData = [];
     let chartData = { labels: [], data: [] };
 
     try {
@@ -61,6 +74,7 @@ async function loadAdminData() {
             stats = data.stats;
             orders = data.orders;
             chartData = data.chart_data;
+            studentsData = data.students || [];
         }
     } catch (e) { console.error(e); }
 
@@ -125,7 +139,7 @@ async function loadAdminData() {
         if (stats.students_count === 0) {
             studentsTbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">No students yet.</td></tr>';
         }
-        (data.students || []).forEach(s => {
+        studentsData.forEach(s => {
             studentsTbody.innerHTML += `
                     <tr>
                         <td><strong>${s.name}</strong><br><small style="color:#aaa;">${s.email}</small></td>
@@ -191,14 +205,22 @@ function renderCharts(labels, data) {
         }
     };
 
-    if (salesChartInstance) salesChartInstance.destroy();
+    try {
+        if (salesChartInstance) salesChartInstance.destroy();
+    } catch (e) {}
+
     salesChartInstance = new Chart(salesCtx.getContext('2d'), chartConfig);
 
-    if (detailedChartInstance) detailedChartInstance.destroy();
-    // detailed chart could be a bar chart for variety
-    chartConfig.type = 'bar';
-    chartConfig.data.datasets[0].backgroundColor = '#007bff';
-    detailedChartInstance = new Chart(detailedCtx.getContext('2d'), chartConfig);
+    try {
+        if (detailedChartInstance) detailedChartInstance.destroy();
+    } catch (e) {}
+
+    if (detailedCtx) {
+        // detailed chart could be a bar chart for variety
+        chartConfig.type = 'bar';
+        chartConfig.data.datasets[0].backgroundColor = '#007bff';
+        detailedChartInstance = new Chart(detailedCtx.getContext('2d'), chartConfig);
+    }
 }
 
 // Function to generate fake sales data for testing the graph
@@ -335,7 +357,7 @@ function switchTab(viewId, navItem) {
 function logout() {
     if (confirm('Are you sure you want to log out of the Admin Dashboard?')) {
         // Redirect back to the login page as requested
-        window.location.href = '../login.html';
+        window.location.href = '/logout/';
     }
 }
 
