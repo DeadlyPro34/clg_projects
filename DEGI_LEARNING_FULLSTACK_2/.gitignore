@@ -1,0 +1,10 @@
+# Django environment files
+.env
+db.sqlite3
+media/
+__pycache__/
+*.pyc
+.venv/
+.idea/
+.vscode/
+node_modules/
