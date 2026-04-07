@@ -19,8 +19,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
+import os
+from dotenv import load_dotenv
+
+# Load secret environment variables from .env file
+load_dotenv()
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure--7^&g$v5z8^h26=)u*uodm(pl$6mj6=c+ot3sc)yfz0t181ef6'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-fallback-key-replace-me')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -136,4 +142,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # EMAIL_HOST_PASSWORD = 'your-app-password'
 
 # --- THIRD-PARTY API KEYS ---
-GOOGLE_API_KEY = "AIzaSyAv8rIpR27COpbdKjgWY-cP2I-h2-0TAM8"
+# Load from .env or environment variable
+GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY", "YOUR_API_KEY_HERE")
